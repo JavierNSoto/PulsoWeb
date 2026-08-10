@@ -1,0 +1,41 @@
+---
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import WhatsAppButton from '../components/layout/WhatsAppButton.astro';
+import MotionEffects from '../components/layout/MotionEffects.astro';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'PulsoWeb | Diseño y tecnología digital',
+	description = 'PulsoWeb — soluciones digitales con diseño y tecnología.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#07111F" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link rel="canonical" href={new URL(Astro.url.pathname, 'https://pulsoweb.cl')} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<Navbar />
+		<slot />
+		<Footer />
+		<WhatsAppButton />
+		<MotionEffects />
+	</body>
+</html>

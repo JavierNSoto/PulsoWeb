@@ -1,0 +1,36 @@
+---
+import { whatsappUrl } from '../../data/site';
+---
+
+<a
+	class="whatsapp-float"
+	data-reveal="scale"
+	href={whatsappUrl}
+	target="_blank"
+	rel="noopener noreferrer"
+	aria-label="Hablar con PulsoWeb por WhatsApp"
+>
+	<span class="whatsapp-float__label">¿Hablamos?</span>
+	<span class="whatsapp-float__icon" aria-hidden="true">
+		<svg viewBox="0 0 24 24">
+			<path fill="currentColor" d="M12.04 2a9.84 9.84 0 0 0-8.43 14.92L2.05 22l5.2-1.52A9.95 9.95 0 1 0 12.04 2Zm0 17.9a8.02 8.02 0 0 1-4.09-1.12l-.29-.17-3.08.9.92-3-.2-.31a7.94 7.94 0 1 1 6.74 3.7Zm4.36-5.95c-.24-.12-1.41-.69-1.63-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18a7.18 7.18 0 0 1-1.33-1.65c-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.29-.73-1.77-.2-.46-.39-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 1.99s.86 2.31.97 2.47c.12.16 1.68 2.56 4.07 3.59.57.24 1.01.39 1.36.5.57.18 1.09.16 1.5.1.46-.07 1.41-.58 1.61-1.13.2-.56.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" />
+		</svg>
+	</span>
+</a>
+
+<style>
+	.whatsapp-float { position: fixed; right: clamp(18px,2.5vw,36px); bottom: clamp(18px,2.5vw,34px); z-index: 90; display: flex; align-items: center; gap: 10px; }
+	.whatsapp-float__label { padding: 9px 12px; border: 1px solid rgba(148,163,184,.18); border-radius: 10px; background: #0d1b2e; color: #dbe5f2; font-size: .68rem; font-weight: 700; opacity: 0; pointer-events: none; transform: translateX(8px); transition: opacity .18s ease,transform .18s ease; }
+	.whatsapp-float__icon { display: grid; width: 56px; height: 56px; place-items: center; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; background: #20a868; color: #fff; transition: background .18s ease,transform .18s ease; }
+	.whatsapp-float__icon svg { width: 27px; height: 27px; }
+	.whatsapp-float:hover .whatsapp-float__label,.whatsapp-float:focus-visible .whatsapp-float__label { opacity: 1; transform: translateX(0); }
+	.whatsapp-float:hover .whatsapp-float__icon { background: #168a55; transform: translateY(-3px); }
+	.whatsapp-float:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 4px; border-radius: 50%; }
+	@media(max-width:520px){
+		.whatsapp-float__label { display: none; }
+		.whatsapp-float__icon { width: 52px; height: 52px; }
+	}
+	@media(prefers-reduced-motion:reduce){
+		.whatsapp-float__label,.whatsapp-float__icon { transition: none; }
+	}
+</style>

@@ -1,0 +1,32 @@
+---
+import { whatsappUrl } from '../../data/site';
+
+interface Props {
+	eyebrow: string;
+	title: string;
+	highlight: string;
+	description: string;
+	features: string[];
+}
+
+const { eyebrow, title, highlight, description, features } = Astro.props;
+---
+
+<main class="service-page">
+	<section class="service-hero">
+		<div class="service-glow"></div>
+		<div class="container service-hero__grid">
+			<div data-reveal="left">
+				<a class="back-link" href="/#servicios">← Todos los servicios</a>
+				<p class="eyebrow">{eyebrow}</p>
+				<h1>{title} <span>{highlight}</span></h1>
+				<p class="service-lead">{description}</p>
+				<a class="button button--primary" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Cotizar este servicio</a>
+			</div>
+			<div class="feature-panel" data-reveal="right" style="--reveal-delay:120ms">
+				<p>Qué incluye</p>
+				<ul>{features.map((feature) => <li><i>✓</i><span>{feature}</span></li>)}</ul>
+			</div>
+		</div>
+	</section>
+</main>

@@ -1,0 +1,51 @@
+---
+import { technologies } from '../../data/technologies';
+---
+
+<section class="tech-stack" aria-label="Tecnologías que utilizamos" data-reveal="fade">
+	<div class="tech-marquee" aria-label={`Tecnologías: ${technologies.map(({ name }) => name).join(', ')}`}>
+		<div class="tech-marquee__fade tech-marquee__fade--left" aria-hidden="true"></div>
+		<div class="tech-marquee__fade tech-marquee__fade--right" aria-hidden="true"></div>
+		<div class="tech-marquee__track">
+			<div class="tech-marquee__group">
+				{technologies.map((technology) => (
+					<div class="technology">
+						<span class="technology__icon" style={`--technology-color:${technology.color}`}>{technology.short}</span>
+						<strong>{technology.name}</strong>
+					</div>
+				))}
+			</div>
+			<div class="tech-marquee__group" aria-hidden="true">
+				{technologies.map((technology) => (
+					<div class="technology">
+						<span class="technology__icon" style={`--technology-color:${technology.color}`}>{technology.short}</span>
+						<strong>{technology.name}</strong>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.tech-stack { padding: 0 0 var(--section-space); overflow: hidden; background: transparent; }
+	.tech-marquee { position: relative; width: 100%; overflow: hidden; }
+	.tech-marquee__track { display: flex; width: max-content; animation: technology-scroll 34s linear infinite; }
+	.tech-marquee:hover .tech-marquee__track { animation-play-state: paused; }
+	.tech-marquee__group { display: flex; flex-shrink: 0; gap: 13px; padding-right: 13px; }
+	.technology { display: flex; min-width: 170px; height: 72px; padding: 0 20px; align-items: center; gap: 13px; border: 1px solid rgba(148,163,184,.14); border-radius: 16px; background: #0d1b2e; }
+	.technology__icon { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid color-mix(in srgb,var(--technology-color) 38%,transparent); border-radius: 10px; background: color-mix(in srgb,var(--technology-color) 10%,transparent); color: var(--technology-color); font-size: .67rem; font-weight: 800; letter-spacing: -.03em; }
+	.technology strong { color: #cbd5e1; font-size: .78rem; font-weight: 700; }
+	.tech-marquee__fade { position: absolute; top: 0; bottom: 0; z-index: 2; width: min(10vw,130px); pointer-events: none; }
+	.tech-marquee__fade--left { left: 0; background: linear-gradient(90deg,var(--color-night),transparent); }
+	.tech-marquee__fade--right { right: 0; background: linear-gradient(-90deg,var(--color-night),transparent); }
+	@keyframes technology-scroll { to { transform: translateX(-50%); } }
+	@media(max-width:700px){
+		.technology { min-width: 150px; height: 66px; }
+	}
+	@media(prefers-reduced-motion:reduce){
+		.tech-marquee { overflow-x: auto; scrollbar-width: thin; }
+		.tech-marquee__track { animation: none; }
+		.tech-marquee__group[aria-hidden='true'] { display: none; }
+	}
+</style>

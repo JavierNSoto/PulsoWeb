@@ -1,0 +1,117 @@
+<section class="home-hero" id="inicio">
+	<div class="hero-photo" aria-hidden="true" data-reveal="fade" style="--reveal-duration:1.3s">
+		<img src="/images/hero-desarrollo-web.webp" alt="" width="1400" height="745" fetchpriority="high" data-parallax="0.07" />
+	</div>
+
+	<div class="container hero-layout">
+		<div class="hero-copy">
+			<p class="eyebrow" data-reveal="left">Diseño y desarrollo web</p>
+			<h1 data-reveal="left" style="--reveal-delay:90ms">Tu negocio merece una web que <span>lo haga avanzar.</span></h1>
+			<p class="hero-lead" data-reveal="left" style="--reveal-delay:180ms">Diseñamos sitios claros, rápidos y profesionales que convierten la esencia de tu marca en una experiencia digital que genera confianza y resultados.</p>
+
+			<div class="hero-actions" data-reveal="up" style="--reveal-delay:260ms">
+				<a class="button button--primary" href="#pagina-web">Crear mi página web <b>↗</b></a>
+				<a class="hero-link" href="/proyectos">Ver páginas web <span>→</span></a>
+			</div>
+
+			<div class="hero-features" aria-label="Características del servicio" data-stagger>
+				<div class="hero-feature">
+					<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z" /></svg></span>
+					<div><strong>Sitios rápidos</strong><small>Optimizados para máximo rendimiento.</small></div>
+				</div>
+				<div class="hero-feature">
+					<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.8 2.8 8.2 7 10 4.2-1.8 7-5.2 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-4" /></svg></span>
+					<div><strong>Seguros y confiables</strong><small>Protegemos tu web y tu información.</small></div>
+				</div>
+				<div class="hero-feature">
+					<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18 9 13l3 3 7-8" /><path d="M15 8h4v4" /></svg></span>
+					<div><strong>Diseño que convierte</strong><small>Experiencias pensadas para generar resultados.</small></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="floating-card floating-card--custom">
+			<span class="floating-card__icon" aria-hidden="true">✦</span>
+			<div><strong>Hecho a tu medida</strong><small>Cada proyecto es único, diseñado para tu negocio.</small></div>
+		</div>
+
+		<div class="floating-card floating-card--speed">
+			<span class="floating-card__icon" aria-hidden="true">
+				<svg viewBox="0 0 24 24"><path d="M14 4c3-1 5 0 6 0 0 1 1 3 0 6l-5 5-5-5 4-6Z" /><path d="m10 14-3 1-2 4 4-2 1-3ZM14 10l-7 7" /></svg>
+			</span>
+			<div><strong>Sitios rápidos y profesionales</strong><small>Tecnología moderna para webs rápidas y seguras.</small></div>
+		</div>
+
+		<div class="process-card">
+			<div class="process-card__steps" aria-hidden="true"><span>UX</span><span>UI</span><span>DEV</span></div>
+			<div><strong>Un proceso completo</strong><small>Diseño, desarrollo y soporte.</small></div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.home-hero { position: relative; min-height: 100svh; overflow: hidden; background: var(--color-night); }
+	.hero-photo { position: absolute; inset: 0 0 0 34%; overflow: hidden; }
+	.hero-photo::before { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg,var(--color-night) 0%,rgba(7,17,31,.94) 13%,rgba(7,17,31,.48) 42%,rgba(7,17,31,.08) 72%),linear-gradient(to top,var(--color-night) 0%,rgba(7,17,31,.72) 10%,transparent 30%); content: ''; }
+	.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 61% center; filter: saturate(.68) brightness(.67) contrast(1.08); transform: translate3d(0,var(--parallax-y,0),0) scale(1.08); will-change: transform; }
+	.hero-layout { width: min(1180px,calc(100% - 40px)); max-width: 1180px; min-height: 100svh; padding-top: clamp(140px,16vh,165px); padding-bottom: 44px; }
+	.hero-copy { position: relative; z-index: 3; width: min(57%,680px); }
+	.hero-copy .eyebrow { background: linear-gradient(90deg,var(--color-sky),#818cf8,var(--color-purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+	.hero-copy h1 { max-width: 660px; font-size: clamp(3.2rem,5vw,4.8rem); }
+	.hero-copy h1 span { display: inline; }
+	.hero-lead { max-width: 555px; margin: 28px 0 0; padding-left: 18px; border-left: 2px solid var(--color-blue); color: #a5b3c7; font-size: clamp(.95rem,1.3vw,1.08rem); line-height: 1.72; }
+	.hero-actions { display: flex; flex-wrap: wrap; gap: 27px; margin-top: 34px; align-items: center; }
+	.hero-actions .button { gap: 17px; background: linear-gradient(120deg,#376ee0,#643ee8); }
+	.hero-actions .button b { font-size: 1rem; }
+	.hero-link { display: inline-flex; gap: 12px; align-items: center; color: #d1dbea; font-size: .8rem; font-weight: 700; }
+	.hero-link span { color: var(--color-sky); font-size: 1rem; transition: transform .18s ease; }
+	.hero-link:hover span { transform: translateX(4px); }
+	.hero-features { display: grid; width: min(700px,64vw); margin-top: clamp(44px,5vh,58px); grid-template-columns: repeat(3,1fr); gap: 22px; }
+	.hero-feature { display: flex; min-width: 0; gap: 11px; align-items: flex-start; }
+	.hero-feature > span { display: grid; flex: 0 0 41px; height: 41px; place-items: center; border: 1px solid rgba(96,165,250,.24); border-radius: 50%; background: rgba(37,99,235,.12); color: #93c5fd; }
+	.hero-feature svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+	.hero-feature strong,.hero-feature small { display: block; }
+	.hero-feature strong { margin: 2px 0 5px; color: #d6dfeb; font-size: .66rem; }
+	.hero-feature small { color: #75869d; font-size: .58rem; line-height: 1.45; }
+	.floating-card,.process-card { position: absolute; z-index: 4; border: 1px solid rgba(148,163,184,.2); border-radius: 14px; background: #0d1b2e; }
+	.floating-card { display: flex; width: 230px; padding: 17px; align-items: center; gap: 12px; }
+	.floating-card--custom { top: 22%; left: 53%; animation: card-pop .7s .7s both,float-card 5s 1.5s ease-in-out infinite; }
+	.floating-card--speed { right: 1%; bottom: 26%; width: 270px; animation: card-pop .7s .9s both,float-card 5.6s 1.8s ease-in-out infinite reverse; }
+	.floating-card__icon { display: grid; flex: 0 0 40px; height: 40px; place-items: center; border-radius: 11px; background: linear-gradient(145deg,#326fd9,#6538db); color: #fff; }
+	.floating-card__icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+	.floating-card strong,.floating-card small,.process-card strong,.process-card small { display: block; }
+	.floating-card strong,.process-card strong { margin-bottom: 5px; color: #e2e8f0; font-size: .66rem; }
+	.floating-card small,.process-card small { color: #8696ac; font-size: .56rem; line-height: 1.45; }
+	.process-card { right: 18%; bottom: 7%; display: flex; padding: 13px 16px; align-items: center; gap: 13px; animation: card-pop .7s 1.1s both,float-card 6.2s 2s ease-in-out infinite; }
+	.process-card__steps { display: flex; padding-left: 9px; }
+	.process-card__steps span { display: grid; width: 31px; height: 31px; margin-left: -9px; place-items: center; border: 2px solid #0d1b2e; border-radius: 50%; background: #203652; color: #bfdbfe; font-size: .45rem; font-weight: 800; }
+	@keyframes card-pop { from { opacity: 0; scale: .88; } to { opacity: 1; scale: 1; } }
+	@keyframes float-card { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+
+	@media(max-width:1050px){
+		.floating-card--custom { left: 61%; }
+		.floating-card--speed { right: 2%; }
+		.process-card { right: 8%; }
+	}
+	@media(max-width:860px){
+		.home-hero { display: flex; padding-bottom: 70px; flex-direction: column; }
+		.hero-photo { position: relative; inset: auto; order: 2; width: calc(100% - 28px); height: min(68vw,560px); margin: 0 auto; border-radius: 22px; }
+		.hero-photo::before { background: linear-gradient(to bottom,var(--color-night),transparent 25%),linear-gradient(to top,var(--color-night),transparent 20%); }
+		.hero-photo img { transform: scale(1.04); }
+		.hero-layout { width: min(100% - 28px,1180px); min-height: auto; order: 1; padding-top: 145px; padding-bottom: 0; }
+		.hero-copy { width: 100%; }
+		.hero-features { width: 100%; margin-bottom: 55px; }
+		.floating-card,.process-card { display: none; }
+	}
+	@media(max-width:600px){
+		.hero-layout { padding-top: 125px; }
+		.hero-copy h1 { font-size: clamp(2.75rem,13vw,4rem); }
+		.hero-actions,.hero-actions .button { width: 100%; }
+		.hero-features { grid-template-columns: 1fr; gap: 15px; }
+		.hero-photo { height: 560px; }
+	}
+	@media(prefers-reduced-motion:reduce){
+		.floating-card,.process-card { animation: none; }
+		.hero-photo img { transform: none; }
+	}
+</style>

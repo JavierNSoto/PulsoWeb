@@ -1,0 +1,76 @@
+---
+import Logo from '../ui/Logo.astro';
+import { navigation, services, whatsappUrl } from '../../data/site';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="container">
+		<section class="footer-cta" aria-labelledby="footer-cta-title" data-reveal="scale">
+			<div>
+				<p>¿Tienes un proyecto en mente?</p>
+				<h2 id="footer-cta-title">Démosle un nuevo pulso a tu negocio.</h2>
+			</div>
+			<a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+				<span>Cotizar proyecto</span><i>↗</i>
+			</a>
+		</section>
+
+		<div class="footer-main" data-reveal="up">
+			<div class="footer-brand">
+				<Logo />
+				<p>Diseñamos y desarrollamos sitios web claros, rápidos y preparados para hacer crecer tu negocio.</p>
+				<a class="domain" href="https://pulsoweb.cl">pulsoweb.cl</a>
+			</div>
+
+			<nav class="footer-column" aria-label="Navegación del pie de página">
+				<h3>Navegación</h3>
+				<ul>
+					{navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+					<li><a href="/#servicios">Servicios</a></li>
+				</ul>
+			</nav>
+
+			<nav class="footer-column footer-column--services" aria-label="Servicios de PulsoWeb">
+				<h3>Servicios</h3>
+				<ul>{services.map((service) => <li><a href={service.href}>{service.title}</a></li>)}</ul>
+			</nav>
+		</div>
+
+		<div class="footer-bottom" data-reveal="fade">
+			<p>© {currentYear} PulsoWeb. Todos los derechos reservados.</p>
+			<span>Diseño y desarrollo web en Chile.</span>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.site-footer { position: relative; padding: 0 0 26px; background: transparent; }
+	.footer-cta { display: flex; padding: clamp(30px,5vw,52px); align-items: center; justify-content: space-between; gap: 40px; overflow: hidden; border: 1px solid rgba(148,163,184,.15); border-radius: 25px; background: #0d1b2e; }
+	.footer-cta p { margin: 0 0 10px; color: var(--color-sky); font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+	.footer-cta h2 { max-width: 690px; font-size: clamp(1.9rem,4vw,3.35rem); }
+	.footer-cta > a { display: inline-flex; min-height: 52px; padding: 0 20px; flex: 0 0 auto; align-items: center; gap: 25px; border: 1px solid rgba(147,197,253,.24); border-radius: 12px; background: linear-gradient(120deg,#477be4,#6d4bd9); font-size: .78rem; font-weight: 800; transition: transform .18s ease; }
+	.footer-cta > a:hover { transform: translateY(-2px); }
+	.footer-cta i { font-size: 1rem; font-style: normal; }
+	.footer-main { display: grid; padding: 65px 0 55px; grid-template-columns: minmax(280px,1.4fr) minmax(150px,.55fr) minmax(220px,.7fr); gap: clamp(45px,9vw,125px); }
+	.footer-brand > p { max-width: 390px; margin: 24px 0 18px; color: var(--color-muted); font-size: .82rem; line-height: 1.7; }
+	.domain { color: var(--color-sky); font-size: .74rem; font-weight: 700; }
+	.footer-column h3 { margin: 4px 0 23px; color: #dce5f2; font-size: .68rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+	.footer-column ul { display: grid; margin: 0; padding: 0; gap: 13px; list-style: none; }
+	.footer-column a { color: var(--color-muted); font-size: .74rem; font-weight: 600; transition: color .18s ease; }
+	.footer-column a:hover { color: var(--color-white); }
+	.footer-bottom { display: flex; padding-top: 23px; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(148,163,184,.12); color: #596b82; font-size: .64rem; }
+	.footer-bottom p { margin: 0; }
+	@media(max-width:760px){
+		.footer-cta { align-items: flex-start; flex-direction: column; }
+		.footer-main { grid-template-columns: repeat(2,1fr); }
+		.footer-brand { grid-column: 1 / -1; }
+	}
+	@media(max-width:500px){
+		.footer-cta > a { width: 100%; justify-content: space-between; }
+		.footer-main { grid-template-columns: 1fr; }
+		.footer-brand { grid-column: auto; }
+		.footer-bottom { align-items: flex-start; flex-direction: column; }
+	}
+</style>

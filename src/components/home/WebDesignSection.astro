@@ -1,0 +1,120 @@
+---
+import { whatsappUrl } from '../../data/site';
+import { webPlans } from '../../data/webPlans';
+---
+
+<section class="web-plans" id="pagina-web" aria-labelledby="web-plans-title">
+	<div class="container">
+		<header class="web-plans__header" data-reveal="up">
+			<div>
+				<p class="eyebrow">Planes de diseño web</p>
+				<h2 id="web-plans-title">Una web para cada etapa de tu negocio.</h2>
+			</div>
+			<p>Elige el punto de partida que mejor se adapte a tu proyecto. Todos los planes incluyen implementación profesional y acompañamiento técnico.</p>
+		</header>
+
+		<div class="plans-grid" data-stagger>
+			{webPlans.map((plan, index) => (
+				<article class:list={['plan-card', { 'plan-card--featured': index === 1 }]}>
+					<div class="plan-card__accent" aria-hidden="true"></div>
+					<header class="plan-card__header">
+						<div class="plan-icon" aria-hidden="true">
+							<svg viewBox="0 0 40 40"><path d="M5 21h8l3-9 7 18 5-9h7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+						</div>
+						<div class="plan-number">0{index + 1}</div>
+					</header>
+
+					<div class="plan-card__identity">
+						<div class="plan-type-row">
+							<span class="plan-type">{plan.type}</span>
+							{index === 1 && <span class="recommended">Recomendado</span>}
+						</div>
+						<h3>{plan.name}</h3>
+						<p>{plan.description}</p>
+					</div>
+
+					<div class="primary-price">
+						<span>Implementación</span>
+						<div><strong>{plan.implementationPrice}</strong><small>pago único</small></div>
+					</div>
+
+					<div class="renewal-price">
+						<span>Renovación anual</span>
+						<strong>{plan.renewalPrice}<small>/ año</small></strong>
+					</div>
+
+					<div class="plan-features">
+						<h4>{plan.featuresTitle}</h4>
+						<ul>{plan.features.map((feature) => <li><i>✓</i><span>{feature}</span></li>)}</ul>
+					</div>
+
+					<a class="plan-card__cta" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+						<span>Cotizar {plan.name}</span>
+						<i>↗</i>
+					</a>
+				</article>
+			))}
+		</div>
+
+		<p class="plans-note">Los valores corresponden a precios base y pueden variar según los requerimientos particulares del proyecto.</p>
+	</div>
+</section>
+
+<style>
+	.web-plans { position: relative; overflow: hidden; padding: var(--section-space) 0; background: transparent; scroll-margin-top: 100px; }
+	.web-plans__header { width: 100%; }
+	.web-plans__header h2 { width: 100%; max-width: none; }
+	.web-plans__header > p { width: 100%; margin: 25px 0 0; color: var(--color-muted); font-size: 1rem; line-height: 1.75; }
+
+	.plans-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-top: 65px; align-items: stretch; }
+	.plan-card { --accent-rgb: 56,189,248; position: relative; display: flex; min-width: 0; min-height: 790px; padding: 26px; flex-direction: column; overflow: hidden; border: 1px solid rgba(148,163,184,.14); border-radius: 24px; background: linear-gradient(160deg,rgba(16,34,56,.98),rgba(7,18,32,.98) 72%); box-shadow: 0 22px 60px rgba(0,0,0,.16); transition: border-color .22s ease,transform .22s ease,box-shadow .22s ease; }
+	.plan-card:nth-child(2) { --accent-rgb: 96,91,246; }
+	.plan-card:nth-child(3) { --accent-rgb: 124,58,237; }
+	.plan-card::before { position: absolute; top: -130px; right: -110px; width: 310px; height: 310px; border-radius: 50%; background: radial-gradient(circle,rgba(var(--accent-rgb),.18),transparent 67%); content: ''; pointer-events: none; }
+	.plan-card:hover { border-color: rgba(var(--accent-rgb),.42); box-shadow: 0 30px 75px rgba(0,0,0,.26); transform: translateY(-7px); }
+	.plan-card--featured { border-color: rgba(96,91,246,.4); background: linear-gradient(160deg,rgba(22,39,68,.99),rgba(9,19,38,.99) 72%); box-shadow: 0 24px 75px rgba(37,49,120,.22); }
+	.plan-card__accent { position: absolute; inset: 0 22px auto; height: 2px; border-radius: 0 0 8px 8px; background: linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.95),transparent); }
+	.plan-card__header { position: relative; display: flex; align-items: center; justify-content: space-between; }
+	.plan-icon { display: grid; width: 45px; height: 45px; place-items: center; border: 1px solid rgba(var(--accent-rgb),.25); border-radius: 13px; background: rgba(var(--accent-rgb),.09); color: rgb(var(--accent-rgb)); box-shadow: inset 0 1px rgba(255,255,255,.06); }
+	.plan-icon svg { width: 32px; }
+	.plan-number { color: #405169; font-size: .68rem; font-weight: 800; letter-spacing: .14em; }
+	.plan-card__identity { position: relative; padding: 28px 0 24px; border-bottom: 1px solid rgba(148,163,184,.11); }
+	.plan-type-row { display: flex; min-height: 24px; align-items: center; justify-content: space-between; gap: 7px; }
+	.plan-type { color: rgb(var(--accent-rgb)); font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+	.recommended { padding: 5px 8px; border: 1px solid rgba(129,140,248,.23); border-radius: 99px; background: rgba(99,102,241,.13); color: #c7d2fe; font-size: .52rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+	.plan-card h3 { margin: 13px 0 12px; font-size: clamp(1.65rem,2.5vw,2.15rem); font-weight: 800; letter-spacing: -.045em; }
+	.plan-card__identity p { min-height: 105px; margin: 0; color: var(--color-muted); font-size: .78rem; line-height: 1.65; }
+	.primary-price { padding: 24px 0 17px; }
+	.primary-price > span { display: block; margin-bottom: 8px; color: #718299; font-size: .58rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+	.primary-price > div { display: flex; align-items: baseline; gap: 8px; }
+	.primary-price strong { color: var(--color-white); font-size: clamp(2rem,3.2vw,2.65rem); letter-spacing: -.055em; line-height: 1; }
+	.primary-price small { color: #65768c; font-size: .58rem; font-weight: 600; }
+	.renewal-price { display: flex; min-height: 48px; padding: 0 13px; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid rgba(148,163,184,.1); border-radius: 11px; background: rgba(7,17,31,.55); }
+	.renewal-price > span { color: #8292a8; font-size: .64rem; font-weight: 600; }
+	.renewal-price strong { color: #dbe5f2; font-size: .87rem; }
+	.renewal-price small { margin-left: 3px; color: #64748b; font-size: .54rem; }
+	.plan-features { margin-top: 25px; }
+	.plan-features h4 { margin: 0 0 11px; color: #cbd5e1; font-size: .64rem; font-weight: 700; }
+	.plan-features ul { display: grid; margin: 0; padding: 0; list-style: none; }
+	.plan-features li { display: flex; gap: 9px; padding: 6px 0; color: #899aaf; font-size: .66rem; line-height: 1.4; }
+	.plan-features li i { display: grid; flex: 0 0 17px; height: 17px; place-items: center; border-radius: 50%; background: rgba(var(--accent-rgb),.09); color: rgb(var(--accent-rgb)); font-size: .53rem; font-style: normal; font-weight: 800; }
+	.plan-card__cta { position: relative; display: flex; min-height: 48px; margin-top: auto; padding: 0 16px; align-items: center; justify-content: space-between; border: 1px solid rgba(var(--accent-rgb),.25); border-radius: 12px; background: rgba(var(--accent-rgb),.08); color: #dbeafe; font-size: .72rem; font-weight: 700; transition: background .18s ease,border-color .18s ease,box-shadow .18s ease; }
+	.plan-card--featured .plan-card__cta { border-color: transparent; background: linear-gradient(120deg,#386fdb,#6845d5); box-shadow: 0 10px 30px rgba(79,70,229,.22); }
+	.plan-card__cta:hover { border-color: rgba(var(--accent-rgb),.55); background: rgba(var(--accent-rgb),.16); }
+	.plan-card--featured .plan-card__cta:hover { background: linear-gradient(120deg,#4380ed,#7653e4); box-shadow: 0 14px 35px rgba(79,70,229,.34); }
+	.plan-card__cta i { color: rgb(var(--accent-rgb)); font-size: .95rem; font-style: normal; }
+	.plan-card--featured .plan-card__cta i { color: #fff; }
+	.plans-note { max-width: 720px; margin: 27px auto 0; color: #64748b; font-size: .68rem; line-height: 1.6; text-align: center; }
+
+	@media(max-width:900px){
+		.plans-grid { grid-template-columns: 1fr; }
+		.plans-grid { width: min(100%,620px); margin-inline: auto; }
+		.plan-card { min-height: auto; }
+		.plan-card__identity p { min-height: 0; }
+		.plan-card__cta { margin-top: 30px; }
+	}
+	@media(max-width:520px){
+		.plan-card { padding: 22px; }
+		.primary-price strong { font-size: 2.25rem; }
+	}
+</style>
