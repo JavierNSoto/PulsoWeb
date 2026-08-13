@@ -1,12 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectGrid from '../components/projects/ProjectGrid.astro';
 ---
-<BaseLayout title="Proyectos | PulsoWeb" description="Conoce los proyectos digitales desarrollados por PulsoWeb.">
+
+<BaseLayout title="Proyectos de diseño y desarrollo web | PulsoWeb" description="Conoce proyectos propios y conceptos de sitios web y ecommerce creados por PulsoWeb en Chile.">
 	<main class="projects-page">
-		<section class="container projects-intro" data-reveal="up">
-			<p class="eyebrow">Nuestro trabajo</p>
-			<h1>Proyectos con <span>pulso propio.</span></h1>
-			<p>Muy pronto compartiremos aquí una selección de experiencias digitales creadas para marcas que quieren avanzar.</p>
+		<section class="projects-hero">
+			<div class="container" data-reveal="up">
+				<h1>Proyectos con <span>pulso propio.</span></h1>
+				<p class="projects-lead">Una muestra de cómo transformamos objetivos comerciales en experiencias digitales claras, rápidas y pensadas para conectar.</p>
+			</div>
 		</section>
+
+		<section class="projects-catalog">
+			<div class="container">
+				<ProjectGrid />
+			</div>
+		</section>
+
 	</main>
 </BaseLayout>
+
+<style>
+	.projects-hero { padding: clamp(205px,25vh,270px) 0 110px; }
+	.projects-hero h1 { max-width: 900px; }
+	.projects-lead { max-width: 690px; margin: 30px 0 0; color: var(--color-muted); font-size: 1.05rem; line-height: 1.75; }
+	.projects-catalog { padding: 0 0 var(--section-space); }
+	@media(max-width:520px){
+		.projects-hero { padding-top: 160px; }
+	}
+</style>

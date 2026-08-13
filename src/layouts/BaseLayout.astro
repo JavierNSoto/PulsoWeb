@@ -3,17 +3,36 @@ import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
 import WhatsAppButton from '../components/layout/WhatsAppButton.astro';
 import MotionEffects from '../components/layout/MotionEffects.astro';
+import { contactEmail, whatsappDisplay } from '../data/site';
 import '../styles/global.css';
 
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
 }
 
 const {
-	title = 'PulsoWeb | Diseño y tecnología digital',
-	description = 'PulsoWeb — soluciones digitales con diseño y tecnología.',
+	title = 'Diseño de páginas web y ecommerce en Chile | PulsoWeb',
+	description = 'Diseñamos páginas web y ecommerce rápidos, profesionales y preparados para hacer crecer negocios en Chile.',
+	image = '/images/hero-desarrollo-web.webp',
 } = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://pulsoweb.cl');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+const socialImageUrl = new URL(image, siteUrl);
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfessionalService',
+	name: 'PulsoWeb',
+	description,
+	url: siteUrl.toString(),
+	image: socialImageUrl.toString(),
+	email: contactEmail,
+	telephone: whatsappDisplay,
+	areaServed: { '@type': 'Country', name: 'Chile' },
+	serviceType: ['Diseño de páginas web', 'Desarrollo ecommerce', 'Mantención web', 'Seguridad web'],
+};
 ---
 
 <!doctype html>
@@ -23,13 +42,28 @@ const {
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<meta name="robots" content="index, follow" />
 		<meta name="theme-color" content="#07111F" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/images/logo-pulsoweb-symbol.png" />
+		<link rel="apple-touch-icon" href="/images/logo-pulsoweb-symbol.png" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-		<link rel="canonical" href={new URL(Astro.url.pathname, 'https://pulsoweb.cl')} />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="es_CL" />
+		<meta property="og:site_name" content="PulsoWeb" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={socialImageUrl} />
+		<meta property="og:image:alt" content="PulsoWeb, diseño y desarrollo web en Chile" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImageUrl} />
 		<title>{title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 	</head>
 	<body>
 		<Navbar />

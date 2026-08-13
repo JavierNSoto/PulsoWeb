@@ -21,9 +21,22 @@ export const services = [
 
 export const navigation = [
 	{ label: 'Inicio', href: '/#inicio' },
-	{ label: 'Página Web', href: '/#pagina-web' },
+	{ label: 'Páginas web', href: '/#paginas-web' },
 	{ label: 'Proyectos', href: '/proyectos' },
+	{ label: 'Cómo trabajamos', href: '/#proceso' },
+	{ label: 'Preguntas frecuentes', href: '/#preguntas' },
+	{ label: 'Contacto', href: '/#contacto' },
 ] as const;
 
-// Reemplazar por el número real en formato internacional, sin símbolos ni espacios.
-export const whatsappUrl = 'https://wa.me/';
+export const contactEmail = 'contacto@pulsoweb.cl';
+export const whatsappNumber = '56998796837';
+export const whatsappDisplay = '+56 9 9879 6837';
+
+export const getWhatsappUrl = (message: string) =>
+	`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+export const whatsappLinks = {
+	general: getWhatsappUrl('Hola PulsoWeb, quiero conversar sobre un proyecto digital.'),
+	website: getWhatsappUrl('Hola PulsoWeb, quiero cotizar una página web para mi negocio.'),
+	ecommerce: getWhatsappUrl('Hola PulsoWeb, quiero cotizar un ecommerce para mi negocio.'),
+} as const;

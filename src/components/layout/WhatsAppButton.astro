@@ -1,36 +1,232 @@
 ---
-import { whatsappUrl } from '../../data/site';
+import { whatsappNumber } from '../../data/site';
 ---
 
-<a
-	class="whatsapp-float"
-	data-reveal="scale"
-	href={whatsappUrl}
-	target="_blank"
-	rel="noopener noreferrer"
-	aria-label="Hablar con PulsoWeb por WhatsApp"
->
-	<span class="whatsapp-float__label">¿Hablamos?</span>
-	<span class="whatsapp-float__icon" aria-hidden="true">
-		<svg viewBox="0 0 24 24">
-			<path fill="currentColor" d="M12.04 2a9.84 9.84 0 0 0-8.43 14.92L2.05 22l5.2-1.52A9.95 9.95 0 1 0 12.04 2Zm0 17.9a8.02 8.02 0 0 1-4.09-1.12l-.29-.17-3.08.9.92-3-.2-.31a7.94 7.94 0 1 1 6.74 3.7Zm4.36-5.95c-.24-.12-1.41-.69-1.63-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18a7.18 7.18 0 0 1-1.33-1.65c-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.29-.73-1.77-.2-.46-.39-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 1.99s.86 2.31.97 2.47c.12.16 1.68 2.56 4.07 3.59.57.24 1.01.39 1.36.5.57.18 1.09.16 1.5.1.46-.07 1.41-.58 1.61-1.13.2-.56.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" />
-		</svg>
-	</span>
-</a>
+<div class="whatsapp-widget" data-whatsapp-widget data-whatsapp-number={whatsappNumber}>
+	<button
+		class="whatsapp-float"
+		type="button"
+		data-chat-open
+		aria-haspopup="dialog"
+		aria-controls="whatsapp-chat"
+	>
+		<span class="whatsapp-float__label">¿Qué necesitas?</span>
+		<span class="whatsapp-float__icon" aria-hidden="true">
+			<svg viewBox="0 0 24 24">
+				<path fill="currentColor" d="M12.04 2a9.84 9.84 0 0 0-8.43 14.92L2.05 22l5.2-1.52A9.95 9.95 0 1 0 12.04 2Zm0 17.9a8.02 8.02 0 0 1-4.09-1.12l-.29-.17-3.08.9.92-3-.2-.31a7.94 7.94 0 1 1 6.74 3.7Zm4.36-5.95c-.24-.12-1.41-.69-1.63-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18a7.18 7.18 0 0 1-1.33-1.65c-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.29-.73-1.77-.2-.46-.39-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 1.99s.86 2.31.97 2.47c.12.16 1.68 2.56 4.07 3.59.57.24 1.01.39 1.36.5.57.18 1.09.16 1.5.1.46-.07 1.41-.58 1.61-1.13.2-.56.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" />
+			</svg>
+		</span>
+	</button>
+
+	<dialog class="chat-dialog" id="whatsapp-chat" data-chat-dialog aria-labelledby="chat-title">
+		<form class="chat-form" data-chat-form novalidate>
+			<header class="chat-header">
+				<span class="chat-avatar" aria-hidden="true">
+					<img src="/images/logo-pulsoweb-symbol.png" alt="" width="1254" height="1254" decoding="async" />
+				</span>
+				<span><strong id="chat-title">PulsoWeb</strong><small><i></i> Respuesta directa por WhatsApp</small></span>
+				<button class="chat-close" type="button" data-chat-close aria-label="Cerrar conversación">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+				</button>
+			</header>
+
+			<div class="chat-body">
+				<div class="chat-intro">
+					<p>¡Hola! 👋</p>
+					<p>Cuéntanos qué necesitas y prepararemos tu mensaje.</p>
+				</div>
+
+				<div class="chat-progress" aria-label="Progreso del formulario">
+					<span>Paso <b data-step-current>1</b> de 3</span>
+					<div><i data-progress-bar></i></div>
+				</div>
+
+				<fieldset class="chat-step" data-chat-step>
+					<legend>¿Qué necesitas?</legend>
+					<label class="chat-option"><input type="radio" name="service" value="Una página web" /><span>Página web</span></label>
+					<label class="chat-option"><input type="radio" name="service" value="Una tienda online" /><span>Tienda online</span></label>
+					<label class="chat-option"><input type="radio" name="service" value="Mejorar o mantener mi sitio" /><span>Mejorar mi sitio</span></label>
+					<label class="chat-option"><input type="radio" name="service" value="Otro proyecto digital" /><span>Otro proyecto</span></label>
+				</fieldset>
+
+				<fieldset class="chat-step" data-chat-step hidden>
+					<legend>Cuéntanos brevemente sobre tu proyecto</legend>
+					<label class="chat-textarea">
+						<span class="sr-only">Descripción del proyecto</span>
+						<textarea name="details" rows="4" maxlength="300" placeholder="Ej.: Tengo una empresa de construcción y necesito mostrar mis servicios..."></textarea>
+						<small>Máximo 300 caracteres</small>
+					</label>
+				</fieldset>
+
+				<fieldset class="chat-step" data-chat-step hidden>
+					<legend>¿Cuándo te gustaría comenzar?</legend>
+					<label class="chat-option"><input type="radio" name="timeline" value="Lo antes posible" /><span>Lo antes posible</span></label>
+					<label class="chat-option"><input type="radio" name="timeline" value="Durante el próximo mes" /><span>Durante el próximo mes</span></label>
+					<label class="chat-option"><input type="radio" name="timeline" value="En 1 a 3 meses" /><span>En 1 a 3 meses</span></label>
+					<label class="chat-option"><input type="radio" name="timeline" value="Aún estoy explorando" /><span>Aún estoy explorando</span></label>
+				</fieldset>
+
+				<p class="chat-error" data-chat-error role="alert" aria-live="polite"></p>
+			</div>
+
+			<footer class="chat-actions">
+				<button class="chat-back" type="button" data-chat-back hidden>Anterior</button>
+				<button class="chat-next" type="button" data-chat-next>Siguiente <span>→</span></button>
+				<button class="chat-send" type="submit" data-chat-send hidden>
+					Enviar a WhatsApp
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" /></svg>
+				</button>
+			</footer>
+		</form>
+	</dialog>
+</div>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-whatsapp-widget]').forEach((widget) => {
+		const dialog = widget.querySelector<HTMLDialogElement>('[data-chat-dialog]');
+		const form = widget.querySelector<HTMLFormElement>('[data-chat-form]');
+		const openButton = widget.querySelector<HTMLButtonElement>('[data-chat-open]');
+		const closeButton = widget.querySelector<HTMLButtonElement>('[data-chat-close]');
+		const backButton = widget.querySelector<HTMLButtonElement>('[data-chat-back]');
+		const nextButton = widget.querySelector<HTMLButtonElement>('[data-chat-next]');
+		const sendButton = widget.querySelector<HTMLButtonElement>('[data-chat-send]');
+		const currentLabel = widget.querySelector<HTMLElement>('[data-step-current]');
+		const progressBar = widget.querySelector<HTMLElement>('[data-progress-bar]');
+		const error = widget.querySelector<HTMLElement>('[data-chat-error]');
+		const steps = Array.from(widget.querySelectorAll<HTMLElement>('[data-chat-step]'));
+		let currentStep = 0;
+
+		if (!dialog || !form || !openButton || !backButton || !nextButton || !sendButton || !currentLabel || !progressBar || !error) return;
+
+		const showStep = (index: number) => {
+			currentStep = Math.max(0, Math.min(index, steps.length - 1));
+			steps.forEach((step, stepIndex) => { step.hidden = stepIndex !== currentStep; });
+			currentLabel.textContent = String(currentStep + 1);
+			progressBar.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+			backButton.hidden = currentStep === 0;
+			nextButton.hidden = currentStep === steps.length - 1;
+			sendButton.hidden = currentStep !== steps.length - 1;
+			error.textContent = '';
+			steps[currentStep]?.querySelector<HTMLElement>('input, textarea')?.focus();
+		};
+
+		const isCurrentStepValid = () => {
+			const step = steps[currentStep];
+			const textarea = step?.querySelector<HTMLTextAreaElement>('textarea');
+			const radios = step?.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+
+			if (textarea && !textarea.value.trim()) {
+				error.textContent = 'Cuéntanos brevemente sobre tu proyecto para continuar.';
+				textarea.focus();
+				return false;
+			}
+
+			if (radios?.length && !Array.from(radios).some((radio) => radio.checked)) {
+				error.textContent = 'Selecciona una opción para continuar.';
+				radios[0]?.focus();
+				return false;
+			}
+
+			return true;
+		};
+
+		openButton.addEventListener('click', () => {
+			dialog.showModal();
+			showStep(currentStep);
+		});
+		closeButton?.addEventListener('click', () => dialog.close());
+		backButton.addEventListener('click', () => showStep(currentStep - 1));
+		nextButton.addEventListener('click', () => {
+			if (isCurrentStepValid()) showStep(currentStep + 1);
+		});
+
+		dialog.addEventListener('click', (event) => {
+			if (event.target === dialog) dialog.close();
+		});
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			if (!isCurrentStepValid()) return;
+
+			const data = new FormData(form);
+			const message = [
+				'Hola PulsoWeb, quiero conversar sobre un proyecto.',
+				'',
+				`• Necesito: ${data.get('service')}`,
+				`• Detalles: ${String(data.get('details')).trim()}`,
+				`• Plazo: ${data.get('timeline')}`,
+			].join('\n');
+			const number = widget.dataset.whatsappNumber;
+			window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+			dialog.close();
+			form.reset();
+			currentStep = 0;
+		});
+	});
+</script>
 
 <style>
-	.whatsapp-float { position: fixed; right: clamp(18px,2.5vw,36px); bottom: clamp(18px,2.5vw,34px); z-index: 90; display: flex; align-items: center; gap: 10px; }
-	.whatsapp-float__label { padding: 9px 12px; border: 1px solid rgba(148,163,184,.18); border-radius: 10px; background: #0d1b2e; color: #dbe5f2; font-size: .68rem; font-weight: 700; opacity: 0; pointer-events: none; transform: translateX(8px); transition: opacity .18s ease,transform .18s ease; }
-	.whatsapp-float__icon { display: grid; width: 56px; height: 56px; place-items: center; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; background: #20a868; color: #fff; transition: background .18s ease,transform .18s ease; }
+	.whatsapp-float { position: fixed; right: clamp(18px,2.5vw,36px); bottom: clamp(18px,2.5vw,34px); z-index: 90; display: flex; padding: 0; align-items: center; gap: 10px; border: 0; background: transparent; color: inherit; cursor: pointer; }
+	.whatsapp-float__label { padding: 9px 12px; border: 1px solid rgba(148,163,184,.18); border-radius: 10px; background: #0d1b2e; color: #dbe5f2; font: 700 .68rem var(--font-primary); opacity: 0; pointer-events: none; transform: translateX(8px); transition: opacity .18s ease,transform .18s ease; }
+	.whatsapp-float__icon { display: grid; width: 56px; height: 56px; place-items: center; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; background: #20a868; color: #fff; box-shadow: 0 12px 34px rgba(17,121,72,.26); transition: background .18s ease,transform .18s ease; }
 	.whatsapp-float__icon svg { width: 27px; height: 27px; }
 	.whatsapp-float:hover .whatsapp-float__label,.whatsapp-float:focus-visible .whatsapp-float__label { opacity: 1; transform: translateX(0); }
 	.whatsapp-float:hover .whatsapp-float__icon { background: #168a55; transform: translateY(-3px); }
 	.whatsapp-float:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 4px; border-radius: 50%; }
+
+	.chat-dialog { position: fixed; inset: auto clamp(18px,2.5vw,36px) clamp(88px,8vw,104px) auto; width: min(390px,calc(100% - 28px)); max-width: none; max-height: min(680px,calc(100dvh - 120px)); margin: 0; padding: 0; overflow: hidden; border: 1px solid rgba(var(--color-brand-rgb),.2); border-radius: 20px; background: #091727; box-shadow: 0 28px 90px rgba(0,0,0,.52); color: var(--color-white); }
+	.chat-dialog::backdrop { background: rgba(2,8,17,.5); backdrop-filter: blur(3px); }
+	.chat-form { display: flex; max-height: inherit; flex-direction: column; }
+	.chat-header { display: flex; min-height: 72px; padding: 14px 15px; align-items: center; gap: 11px; border-bottom: 1px solid rgba(var(--color-brand-rgb),.1); background: #0c1c2f; }
+	.chat-avatar { position: relative; display: block; flex: 0 0 46px; height: 38px; overflow: hidden; }
+	.chat-avatar img { position: absolute; top: -3px; left: 0; display: block; width: 46px; height: auto; }
+	.chat-header > span:nth-child(2) { min-width: 0; }
+	.chat-header strong,.chat-header small { display: block; }
+	.chat-header strong { margin-bottom: 4px; font-size: .82rem; }
+	.chat-header small { color: #7f91a7; font-size: .56rem; }
+	.chat-header small i { display: inline-block; width: 6px; height: 6px; margin-right: 3px; border-radius: 50%; background: #3bd58c; }
+	.chat-close { display: grid; width: 38px; height: 38px; margin-left: auto; padding: 0; place-items: center; border: 0; border-radius: 10px; background: transparent; color: #8293a8; cursor: pointer; }
+	.chat-close:hover { background: rgba(148,163,184,.08); color: #fff; }
+	.chat-close svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+	.chat-body { overflow-y: auto; padding: 20px; }
+	.chat-intro { display: grid; justify-items: start; gap: 5px; margin-bottom: 22px; }
+	.chat-intro p { width: fit-content; margin: 0; padding: 9px 12px; border-radius: 4px 12px 12px; background: #10243b; color: #bcc9d9; font-size: .68rem; line-height: 1.45; }
+	.chat-progress { display: flex; margin-bottom: 21px; align-items: center; gap: 12px; }
+	.chat-progress > span { flex: 0 0 auto; color: #687b92; font-size: .54rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+	.chat-progress > div { width: 100%; height: 3px; overflow: hidden; border-radius: 4px; background: #192a3e; }
+	.chat-progress i { display: block; width: 33.333%; height: 100%; border-radius: inherit; background: var(--color-brand); transition: width .25s ease; }
+	.chat-step { display: grid; margin: 0; padding: 0; border: 0; gap: 8px; }
+	.chat-step[hidden] { display: none; }
+	.chat-step legend { width: 100%; margin-bottom: 14px; padding: 0; color: #edf4fb; font-size: 1.02rem; font-weight: 800; letter-spacing: -.025em; }
+	.chat-option { position: relative; display: block; cursor: pointer; }
+	.chat-option input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+	.chat-option span { display: flex; min-height: 43px; padding: 0 13px; align-items: center; border: 1px solid rgba(148,163,184,.13); border-radius: 11px; background: #0c1c2e; color: #9fafc1; font-size: .7rem; font-weight: 700; transition: border-color .18s ease,background .18s ease,color .18s ease; }
+	.chat-option span::after { width: 14px; height: 14px; margin-left: auto; border: 1px solid #3c5068; border-radius: 50%; content: ''; }
+	.chat-option input:checked + span { border-color: rgba(var(--color-brand-rgb),.5); background: rgba(var(--color-brand-rgb),.09); color: #e6f7fc; }
+	.chat-option input:checked + span::after { border: 4px solid var(--color-brand); background: #07111f; }
+	.chat-option input:focus-visible + span { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+	.chat-textarea textarea { width: 100%; min-height: 125px; padding: 13px; resize: vertical; border: 1px solid rgba(148,163,184,.16); border-radius: 12px; outline: none; background: #0c1c2e; color: #e2e8f0; font: 500 .7rem/1.55 var(--font-primary); }
+	.chat-textarea textarea:focus { border-color: rgba(var(--color-brand-rgb),.55); box-shadow: 0 0 0 3px rgba(var(--color-brand-rgb),.07); }
+	.chat-textarea textarea::placeholder { color: #566a82; }
+	.chat-textarea small { display: block; margin-top: 7px; color: #53677f; font-size: .52rem; text-align: right; }
+	.chat-error { min-height: 17px; margin: 10px 0 -7px; color: #fda4af; font-size: .58rem; line-height: 1.45; }
+	.chat-actions { display: flex; min-height: 70px; padding: 12px 20px; align-items: center; justify-content: flex-end; gap: 9px; border-top: 1px solid rgba(var(--color-brand-rgb),.1); background: #0a192a; }
+	.chat-actions button { min-height: 42px; padding: 0 15px; border-radius: 10px; font: 800 .65rem var(--font-primary); cursor: pointer; }
+	.chat-back { margin-right: auto; border: 1px solid rgba(148,163,184,.15); background: transparent; color: #8496ab; }
+	.chat-next { border: 1px solid rgba(var(--color-brand-rgb),.25); background: rgba(var(--color-brand-rgb),.1); color: #dff8ff; }
+	.chat-next span { margin-left: 8px; color: var(--color-brand); }
+	.chat-send { display: inline-flex; border: 0; align-items: center; gap: 9px; background: #20a868; color: #fff; }
+	.chat-send svg { width: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+	.chat-actions button[hidden] { display: none; }
+
 	@media(max-width:520px){
 		.whatsapp-float__label { display: none; }
 		.whatsapp-float__icon { width: 52px; height: 52px; }
+		.chat-dialog { inset: auto 0 0; width: 100%; max-height: calc(100dvh - 48px); border-width: 1px 0 0; border-radius: 22px 22px 0 0; }
+		.chat-body { padding: 18px; }
+		.chat-actions { padding-inline: 18px; }
 	}
 	@media(prefers-reduced-motion:reduce){
-		.whatsapp-float__label,.whatsapp-float__icon { transition: none; }
+		.whatsapp-float__label,.whatsapp-float__icon,.chat-progress i { transition: none; }
 	}
 </style>

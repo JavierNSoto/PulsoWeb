@@ -3,13 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
 import WebDesignSection from '../components/home/WebDesignSection.astro';
 import ServicesPreview from '../components/home/ServicesPreview.astro';
+import ProcessSection from '../components/home/ProcessSection.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import FaqSection from '../components/home/FaqSection.astro';
 import TechStack from '../components/home/TechStack.astro';
 ---
-<BaseLayout>
+<BaseLayout title="Diseño de páginas web y ecommerce en Chile | PulsoWeb" description="Diseñamos páginas web y ecommerce rápidos, profesionales y preparados para hacer crecer negocios en Chile.">
 	<main>
 		<HomeHero />
 		<WebDesignSection />
+		<ProcessSection />
 		<ServicesPreview />
+		<ContactSection />
+		<FaqSection />
 		<TechStack />
 	</main>
 </BaseLayout>

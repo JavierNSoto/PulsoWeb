@@ -1,0 +1,58 @@
+---
+const principles = [
+	{ icon: 'message', title: 'Comunicación directa', description: 'Conversaciones claras y seguimiento durante todo el proyecto.' },
+	{ icon: 'scope', title: 'Alcance transparente', description: 'Entregables, tiempos y condiciones definidos antes de comenzar.' },
+	{ icon: 'design', title: 'Diseño con propósito', description: 'Cada decisión busca comunicar mejor y facilitar una acción concreta.' },
+	{ icon: 'support', title: 'Continuidad técnica', description: 'Publicación, orientación y opciones de soporte después de la entrega.' },
+];
+---
+
+<section class="trust-section" aria-labelledby="trust-title">
+	<div class="container trust-layout">
+		<div class="trust-copy" data-reveal="left">
+			<p class="eyebrow">Por qué PulsoWeb</p>
+			<h2 id="trust-title">Tecnología cercana para decisiones más simples.</h2>
+			<p>PulsoWeb reúne diseño, desarrollo y acompañamiento técnico en un solo servicio. Traducimos lo complejo a una propuesta entendible para que puedas avanzar con claridad.</p>
+			<div class="trust-note"><span>✦</span><p><strong>Sin promesas infladas.</strong> Recomendamos lo que tu proyecto necesita y dejamos el alcance por escrito.</p></div>
+		</div>
+
+		<div class="principles-grid" data-stagger>
+			{principles.map((principle) => (
+				<article>
+					<span class="principle-icon" aria-hidden="true">
+						{principle.icon === 'message' && <svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8.5 8L5 21l1.5-5.4A8 8 0 1 1 20 11.5Z" /></svg>}
+						{principle.icon === 'scope' && <svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z" /><path d="M14 3v5h5M9 12h7M9 16h5" /></svg>}
+						{principle.icon === 'design' && <svg viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10-3.5-3.5-10 10L4 20Z" /><path d="m13.5 7 3.5 3.5" /></svg>}
+						{principle.icon === 'support' && <svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 14 0v5a2 2 0 0 1-2 2h-2" /><path d="M5 12H3v4h3v-4ZM19 12h2v4h-3" /></svg>}
+					</span>
+					<h3>{principle.title}</h3>
+					<p>{principle.description}</p>
+				</article>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.trust-section { padding: var(--section-space) 0; }
+	.trust-layout { display: grid; grid-template-columns: minmax(0,.85fr) minmax(500px,1.15fr); gap: clamp(50px,8vw,110px); align-items: center; }
+	.trust-copy h2 { font-size: clamp(2.35rem,4.7vw,4.2rem); }
+	.trust-copy > p:not(.eyebrow) { margin: 28px 0 0; color: var(--color-muted); font-size: .94rem; line-height: 1.78; }
+	.trust-note { display: flex; margin-top: 30px; padding: 18px; align-items: flex-start; gap: 12px; border: 1px solid rgba(var(--color-brand-rgb),.14); border-radius: 14px; background: rgba(var(--color-brand-rgb),.045); }
+	.trust-note > span { color: var(--color-sky); }
+	.trust-note p { margin: 0; color: #8294aa; font-size: .7rem; line-height: 1.6; }
+	.trust-note strong { color: #cbd8e7; }
+	.principles-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+	.principles-grid article { min-height: 220px; padding: 27px; border: 1px solid rgba(148,163,184,.13); border-radius: 20px; background: linear-gradient(145deg,rgba(16,34,56,.88),rgba(9,20,35,.92)); }
+	.principle-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid rgba(var(--color-brand-rgb),.2); border-radius: 11px; background: rgba(var(--color-brand-rgb),.065); color: var(--color-sky); }
+	.principle-icon svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+	.principles-grid h3 { margin: 26px 0 10px; font-size: .9rem; font-weight: 800; }
+	.principles-grid p { margin: 0; color: #7e90a6; font-size: .68rem; line-height: 1.65; }
+	@media(max-width:900px){
+		.trust-layout { grid-template-columns: 1fr; }
+	}
+	@media(max-width:520px){
+		.principles-grid { grid-template-columns: 1fr; }
+		.principles-grid article { min-height: 190px; }
+	}
+</style>

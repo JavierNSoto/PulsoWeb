@@ -1,40 +1,53 @@
 ---
 import { services } from '../../data/site';
+
+const serviceDetails = [
+	{
+		label: 'Continuidad',
+		features: ['Actualizaciones periódicas', 'Respaldos programados', 'Soporte técnico'],
+	},
+	{
+		label: 'Protección',
+		features: ['Monitoreo continuo', 'Revisión de vulnerabilidades', 'Recuperación ante incidentes'],
+	},
+	{
+		label: 'Conversión',
+		features: ['Botón personalizado', 'Mensajes predefinidos', 'Contacto desde cada sección'],
+	},
+] as const;
 ---
 
 <section class="services-showcase" id="servicios" aria-labelledby="services-title">
 	<div class="container">
 		<header class="services-heading" data-reveal="up">
 			<div>
-				<p class="eyebrow">Servicios para tu web</p>
-				<h2 id="services-title">Tu sitio no termina cuando se publica.</h2>
+				<p class="eyebrow">Servicios complementarios</p>
+				<h2 id="services-title">Una web preparada para funcionar, crecer y conectar.</h2>
 			</div>
-			<p>Lo mantenemos activo, protegido y conectado con tus clientes para que siga aportando valor todos los días.</p>
+			<p>Después de publicar, seguimos contigo. Mantén tu sitio actualizado, protegido y preparado para convertir visitas en oportunidades reales.</p>
 		</header>
 
 		<div class="services-grid" data-stagger>
 			{services.map((service, index) => (
 				<a class:list={['service-card', `service-card--${index + 1}`]} href={service.href}>
 					<div class="service-card__top">
-						<span class="service-icon" aria-hidden="true">
-							{service.icon === 'refresh' && <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6" /></svg>}
-							{service.icon === 'shield' && <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.8 2.8 8.2 7 10 4.2-1.8 7-5.2 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-4" /></svg>}
-							{service.icon === 'message' && <svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8.5 8L5 21l1.5-5.4A8 8 0 1 1 20 11.5Z" /><path d="M9 11.5h.01M12 11.5h.01M15 11.5h.01" /></svg>}
-						</span>
+						<div class="service-identity">
+							<span class="service-icon" aria-hidden="true">
+								{service.icon === 'refresh' && <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6" /></svg>}
+								{service.icon === 'shield' && <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.8 2.8 8.2 7 10 4.2-1.8 7-5.2 7-10V6l-7-3Z" /><path d="m9 12 2 2 4-4" /></svg>}
+								{service.icon === 'message' && <svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8.5 8L5 21l1.5-5.4A8 8 0 1 1 20 11.5Z" /><path d="M9 11.5h.01M12 11.5h.01M15 11.5h.01" /></svg>}
+							</span>
+							<span class="service-label">{serviceDetails[index].label}</span>
+						</div>
 						<span class="service-number">0{index + 1}</span>
 					</div>
 
-					<div class="service-watermark" aria-hidden="true">
-						{service.icon === 'refresh' && <svg viewBox="0 0 120 120"><path d="M98 55a40 40 0 1 0-11.5 28.5M98 25v30H68" /></svg>}
-						{service.icon === 'shield' && <svg viewBox="0 0 120 120"><path d="M60 13 25 28v25c0 25 14 43 35 54 21-11 35-29 35-54V28L60 13Z" /><path d="m46 58 9 9 20-22" /></svg>}
-						{service.icon === 'message' && <svg viewBox="0 0 120 120"><path d="M99 57.5a40 40 0 0 1-42.5 40L24 105l7.5-27A40 40 0 1 1 99 57.5Z" /><path d="M45 58h.1M60 58h.1M75 58h.1" /></svg>}
-						<span>{index === 0 ? 'Cuidado continuo' : index === 1 ? 'Protección activa' : 'Contacto directo'}</span>
-					</div>
-
 					<div class="service-card__content">
-						<p>Servicio 0{index + 1}</p>
 						<h3>{service.title}</h3>
-						<span>{service.description}</span>
+						<p>{service.description}</p>
+						<ul aria-label={`Incluye ${service.title.toLowerCase()}`}>
+							{serviceDetails[index].features.map((feature) => <li><i aria-hidden="true">✓</i><span>{feature}</span></li>)}
+						</ul>
 					</div>
 
 					<div class="service-card__link"><span>Conocer el servicio</span><i>↗</i></div>
@@ -46,36 +59,36 @@ import { services } from '../../data/site';
 
 <style>
 	.services-showcase { position: relative; padding: var(--section-space) 0; background: transparent; scroll-margin-top: 100px; }
-	.services-heading { width: 100%; }
-	.services-heading h2 { width: 100%; max-width: none; }
-	.services-heading > p { width: 100%; margin: 25px 0 0; color: var(--color-muted); font-size: 1rem; line-height: 1.75; }
+	.services-heading { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(280px,.55fr); gap: clamp(40px,8vw,110px); align-items: end; }
+	.services-heading h2 { max-width: 820px; }
+	.services-heading > p { margin: 0 0 7px; color: var(--color-muted); font-size: 1rem; line-height: 1.75; }
 
 	.services-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-top: 65px; }
-	.service-card { --accent: 56,189,248; position: relative; display: flex; min-width: 0; min-height: 390px; padding: 28px; flex-direction: column; overflow: hidden; border: 1px solid rgba(148,163,184,.16); border-radius: 24px; background: linear-gradient(150deg,rgba(18,37,62,.94),rgba(7,18,32,.97)); box-shadow: 0 24px 65px rgba(0,0,0,.18); transition: border-color .22s ease,transform .22s ease,box-shadow .22s ease; }
-	.service-card--2 { --accent: 96,165,250; }
-	.service-card--3 { --accent: 52,211,153; }
+	.service-card { --accent: var(--color-brand-rgb); position: relative; display: flex; min-width: 0; min-height: 440px; padding: 28px; flex-direction: column; overflow: hidden; border: 1px solid rgba(148,163,184,.16); border-radius: 24px; background: linear-gradient(150deg,rgba(18,37,62,.96),rgba(7,18,32,.99)); box-shadow: 0 24px 65px rgba(0,0,0,.18); transition: border-color .22s ease,transform .22s ease,box-shadow .22s ease; }
 	.service-card::before { position: absolute; top: -120px; right: -120px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle,rgba(var(--accent),.13),transparent 68%); content: ''; }
+	.service-card::after { position: absolute; inset: 0 auto 0 0; width: 2px; background: linear-gradient(180deg,transparent,rgb(var(--accent)),transparent); opacity: .5; content: ''; }
 	.service-card:hover { border-color: rgba(var(--accent),.4); box-shadow: 0 32px 80px rgba(0,0,0,.27); transform: translateY(-6px); }
 	.service-card__top { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; }
+	.service-identity { display: flex; align-items: center; gap: 11px; }
 	.service-icon { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid rgba(var(--accent),.28); border-radius: 13px; background: rgba(var(--accent),.08); color: rgb(var(--accent)); }
 	.service-icon svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+	.service-label { color: rgb(var(--accent)); font-size: .57rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 	.service-number { color: #45566d; font-size: .64rem; font-weight: 800; letter-spacing: .14em; }
-	.service-watermark { position: absolute; top: 27px; right: 42px; z-index: 1; display: grid; width: 135px; place-items: center; color: rgba(var(--accent),.14); pointer-events: none; }
-	.service-watermark svg { width: 98px; height: 98px; fill: rgba(var(--accent),.015); stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-	.service-watermark span { margin-top: -7px; color: rgba(148,163,184,.3); font-size: .47rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-	.service-card__content { position: relative; z-index: 2; margin-top: 69px; }
-	.service-card__content > p { margin: 0 0 12px; color: rgb(var(--accent)); font-size: .57rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+	.service-card__content { position: relative; z-index: 2; margin-top: 45px; }
 	.service-card__content h3 { margin: 0 0 13px; font-size: clamp(1.6rem,2.6vw,2.25rem); font-weight: 800; letter-spacing: -.05em; line-height: 1.05; }
-	.service-card__content > span { display: block; color: var(--color-muted); font-size: .76rem; line-height: 1.62; }
-	.service-card__link { position: relative; z-index: 2; display: flex; margin-top: auto; padding-top: 19px; align-items: center; justify-content: space-between; border-top: 1px solid rgba(148,163,184,.11); color: #c0cddd; font-size: .67rem; font-weight: 700; }
+	.service-card__content > p { min-height: 50px; margin: 0; color: var(--color-muted); font-size: .76rem; line-height: 1.62; }
+	.service-card__content ul { display: grid; margin: 23px 0 0; padding: 20px 0 0; gap: 10px; border-top: 1px solid rgba(148,163,184,.11); list-style: none; }
+	.service-card__content li { display: flex; align-items: center; gap: 9px; color: #a7b5c6; font-size: .67rem; line-height: 1.45; }
+	.service-card__content li i { display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; border-radius: 50%; background: rgba(var(--accent),.09); color: rgb(var(--accent)); font-size: .52rem; font-style: normal; }
+	.service-card__link { position: relative; z-index: 2; display: flex; margin-top: auto; padding-top: 23px; align-items: center; justify-content: space-between; color: #fff; font-size: .7rem; font-weight: 800; }
 	.service-card__link i { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(var(--accent),.23); border-radius: 50%; color: rgb(var(--accent)); font-size: .85rem; font-style: normal; transition: background .18s ease,transform .18s ease; }
 	.service-card:hover .service-card__link i { background: rgba(var(--accent),.12); transform: rotate(8deg); }
 
 	@media(max-width:900px){
+		.services-heading { grid-template-columns: 1fr; gap: 24px; }
 		.services-grid { grid-template-columns: 1fr; width: min(100%,620px); }
 	}
 	@media(max-width:520px){
-		.service-card { min-height: 370px; padding: 23px; }
-		.service-watermark { right: 24px; }
+		.service-card { min-height: 430px; padding: 23px; }
 	}
 </style>

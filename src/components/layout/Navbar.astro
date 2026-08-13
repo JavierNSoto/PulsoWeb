@@ -1,6 +1,6 @@
 ---
 import Logo from '../ui/Logo.astro';
-import { navigation, services, whatsappUrl } from '../../data/site';
+import { navigation, services, whatsappLinks } from '../../data/site';
 
 const path = Astro.url.pathname;
 const isService = path.startsWith('/servicios/');
@@ -17,9 +17,9 @@ const isService = path.startsWith('/servicios/');
 
 		<div class="nav-menu" id="nav-menu">
 			<ul class="nav-links">
-				{navigation.slice(0, 2).map((item) => (
-					<li><a href={item.href}>{item.label}</a></li>
-				))}
+				<li><a href={navigation[0].href}>{navigation[0].label}</a></li>
+				<li><a href={navigation[1].href}>{navigation[1].label}</a></li>
+				<li><a href={navigation[3].href}>{navigation[3].label}</a></li>
 				<li class:list={['services-dropdown', { 'is-current': isService }]}>
 					<span class="services-control">
 						<a class="services-link" href="/#servicios">Servicios</a>
@@ -30,7 +30,7 @@ const isService = path.startsWith('/servicios/');
 					<div class="services-menu" id="services-dropdown">
 						<p>Servicios digitales</p>
 						{services.map((service) => (
-							<a class:list={{ active: path === service.href }} href={service.href}>
+							<a class:list={{ active: path === service.href }} href={service.href} aria-current={path === service.href ? 'page' : undefined}>
 								<span class="service-mark" aria-hidden="true">
 									{service.icon === 'refresh' && <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6" /></svg>}
 									{service.icon === 'shield' && <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.8 2.8 8.2 7 10 4.2-1.8 7-5.2 7-10V6l-7-3Z" /></svg>}
@@ -41,10 +41,10 @@ const isService = path.startsWith('/servicios/');
 						))}
 					</div>
 				</li>
-				<li><a class:list={{ active: path.startsWith('/proyectos') }} href={navigation[2].href}>Proyectos</a></li>
+				<li><a class:list={{ active: path.startsWith('/proyectos') }} href={navigation[2].href} aria-current={path.startsWith('/proyectos') ? 'page' : undefined}>Proyectos</a></li>
 			</ul>
 
-			<a class="quote-button" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+			<a class="quote-button" href={whatsappLinks.general} target="_blank" rel="noopener noreferrer">
 				Cotizar proyecto
 			</a>
 		</div>
@@ -97,20 +97,20 @@ const isService = path.startsWith('/servicios/');
 	.services-menu > p { margin: 5px 8px 8px; color: #64748b; font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 	.services-dropdown:hover .services-menu,.services-dropdown:focus-within .services-menu,.services-dropdown.is-open .services-menu { opacity: 1; pointer-events: auto; transform: translate(-50%,0); }
 	.services-menu a { display: flex; gap: 11px; align-items: center; padding: 11px; border-radius: 11px; transition: background .18s ease; }
-	.services-menu a:hover,.services-menu a.active { background: rgba(37,99,235,.13); }
-	.service-mark { display: grid; flex: 0 0 34px; height: 34px; place-items: center; border: 1px solid rgba(56,189,248,.15); border-radius: 9px; background: rgba(56,189,248,.07); color: var(--color-sky); }
+	.services-menu a:hover,.services-menu a.active { background: rgba(var(--color-brand-rgb),.11); }
+	.service-mark { display: grid; flex: 0 0 34px; height: 34px; place-items: center; border: 1px solid rgba(var(--color-brand-rgb),.18); border-radius: 9px; background: rgba(var(--color-brand-rgb),.07); color: var(--color-sky); }
 	.service-mark svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 	.services-menu strong,.services-menu small { display: block; }
 	.services-menu strong { font-size: .78rem; }
 	.services-menu small { max-width: 225px; margin-top: 3px; color: var(--color-muted); font-size: .65rem; line-height: 1.35; }
-	.quote-button { display: inline-grid; min-height: 42px; padding: 0 18px; place-items: center; border: 1px solid rgba(147,197,253,.26); border-radius: 11px; background: linear-gradient(120deg,#477be4,#6d4bd9); box-shadow: inset 0 1px rgba(255,255,255,.16),0 9px 25px rgba(79,70,229,.23); font-size: .77rem; font-weight: 800; transition: transform .18s ease,box-shadow .18s ease; }
-	.quote-button:hover { box-shadow: inset 0 1px rgba(255,255,255,.16),0 13px 32px rgba(79,70,229,.36); transform: translateY(-2px); }
+	.quote-button { display: inline-grid; min-height: 42px; padding: 0 18px; place-items: center; border: 1px solid rgba(139,232,255,.34); border-radius: 11px; background: linear-gradient(120deg,var(--color-brand-deep),var(--color-brand)); box-shadow: inset 0 1px rgba(255,255,255,.16),0 9px 25px rgba(var(--color-brand-rgb),.2); color: #fff; font-size: .77rem; font-weight: 800; transition: transform .18s ease,box-shadow .18s ease; }
+	.quote-button:hover { box-shadow: inset 0 1px rgba(255,255,255,.18),0 13px 32px rgba(var(--color-brand-rgb),.32); transform: translateY(-2px); }
 	.nav-toggle { display: none; width: 42px; height: 42px; padding: 11px 9px; border: 1px solid var(--color-slate); border-radius: 10px; background: #0d1b2e; cursor: pointer; }
 	.nav-toggle > span:not(.sr-only) { display: block; width: 21px; height: 2px; margin: 5px auto; border-radius: 2px; background: var(--color-white); transition: transform .18s ease; }
 	.nav-toggle[aria-expanded='true'] > span:nth-child(2) { transform: translateY(3.5px) rotate(45deg); }
 	.nav-toggle[aria-expanded='true'] > span:nth-child(3) { transform: translateY(-3.5px) rotate(-45deg); }
 	@keyframes nav-enter { from { opacity: 0; translate: 0 -22px; } to { opacity: 1; translate: 0 0; } }
-	@media(max-width:860px){
+	@media(max-width:980px){
 		.site-nav { padding: 14px 14px 0; }
 		.nav-shell { min-height: 60px; padding-right: 9px; }
 		.nav-toggle { display: block; }

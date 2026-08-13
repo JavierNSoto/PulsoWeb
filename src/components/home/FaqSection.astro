@@ -1,0 +1,72 @@
+---
+const questions = [
+	{
+		question: '¿Qué necesito para comenzar?',
+		answer: 'Una idea general de tu negocio, tus servicios o productos y el objetivo del proyecto. Si aún no tienes todo definido, lo ordenamos contigo durante la primera conversación.',
+	},
+	{
+		question: '¿Cuánto demora un proyecto?',
+		answer: 'Depende del alcance, la cantidad de contenido y la rapidez de las revisiones. El plazo estimado queda definido en la propuesta antes de comenzar.',
+	},
+	{
+		question: '¿El dominio y la publicación están incluidos?',
+		answer: 'Pueden formar parte de la propuesta cuando corresponda. Dejamos por escrito qué incluye la implementación y qué servicios requieren renovación.',
+	},
+	{
+		question: '¿Cómo se realizan los pagos?',
+		answer: 'La modalidad y los hitos de pago se indican en cada propuesta según el tamaño del proyecto. No comenzamos sin que las condiciones estén claras para ambas partes.',
+	},
+	{
+		question: '¿Podré administrar mi sitio o tienda?',
+		answer: 'En ecommerce incluimos orientación básica para administrar productos y pedidos. En otros proyectos definimos el nivel de administración según tus necesidades.',
+	},
+	{
+		question: '¿Qué ocurre si necesito cambios adicionales?',
+		answer: 'Los ajustes incluidos se detallan en la propuesta. Cualquier necesidad fuera del alcance se evalúa y cotiza antes de realizarla.',
+	},
+	{
+		question: '¿Ofrecen soporte después de publicar?',
+		answer: 'Sí. Podemos acompañarte con mantención, respaldos, seguridad y soporte técnico mediante un servicio acorde a tu sitio.',
+	},
+];
+---
+
+<section class="faq-section" id="preguntas" aria-labelledby="faq-title">
+	<div class="container faq-layout">
+		<header data-reveal="left">
+			<p class="eyebrow">Preguntas frecuentes</p>
+			<h2 id="faq-title">Todo claro antes de comenzar.</h2>
+			<p>Si tu pregunta no aparece aquí, conversemos y revisamos tu caso particular.</p>
+		</header>
+
+		<div class="faq-list" data-reveal="right">
+			{questions.map((item, index) => (
+				<details open={index === 0}>
+					<summary><span>{item.question}</span><i aria-hidden="true"></i></summary>
+					<p>{item.answer}</p>
+				</details>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.faq-section { padding: var(--section-space) 0; }
+	.faq-layout { display: grid; grid-template-columns: minmax(300px,.65fr) minmax(0,1fr); gap: clamp(55px,9vw,130px); align-items: start; }
+	.faq-layout header { position: sticky; top: 130px; }
+	.faq-layout h2 { max-width: 530px; font-size: clamp(2.35rem,4.6vw,4.1rem); }
+	.faq-layout header > p:last-child { max-width: 470px; margin: 25px 0 0; color: var(--color-muted); font-size: .9rem; line-height: 1.75; }
+	.faq-list { border-top: 1px solid rgba(148,163,184,.14); }
+	details { border-bottom: 1px solid rgba(148,163,184,.14); }
+	summary { display: flex; min-height: 78px; padding: 20px 4px; align-items: center; justify-content: space-between; gap: 25px; color: #dce6f2; font-size: .84rem; font-weight: 800; cursor: pointer; list-style: none; }
+	summary::-webkit-details-marker { display: none; }
+	summary i { position: relative; flex: 0 0 24px; height: 24px; border: 1px solid rgba(var(--color-brand-rgb),.2); border-radius: 50%; }
+	summary i::before,summary i::after { position: absolute; top: 50%; left: 50%; width: 8px; height: 1px; background: var(--color-sky); content: ''; transform: translate(-50%,-50%); transition: transform .2s ease; }
+	summary i::after { transform: translate(-50%,-50%) rotate(90deg); }
+	details[open] summary i::after { transform: translate(-50%,-50%) rotate(0); }
+	details > p { max-width: 720px; margin: -3px 45px 24px 4px; color: #8192a8; font-size: .75rem; line-height: 1.75; }
+	@media(max-width:780px){
+		.faq-layout { grid-template-columns: 1fr; }
+		.faq-layout header { position: static; }
+	}
+</style>

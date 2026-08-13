@@ -22,4 +22,4 @@ npm run preview
 - `src/pages`: rutas públicas generadas por Astro.
 - `src/styles`: estilos y tokens globales de marca.
 
-Antes de publicar, configura el número real de WhatsApp en `src/data/site.ts`.
+Los datos de contacto, mensajes de WhatsApp y enlaces globales se administran en `src/data/site.ts`.

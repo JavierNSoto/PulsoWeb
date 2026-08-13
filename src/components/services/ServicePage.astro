@@ -1,5 +1,5 @@
 ---
-import { whatsappUrl } from '../../data/site';
+import { getWhatsappUrl } from '../../data/site';
 
 interface Props {
 	eyebrow: string;
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { eyebrow, title, highlight, description, features } = Astro.props;
+const quoteUrl = getWhatsappUrl(`Hola PulsoWeb, quiero cotizar el servicio de ${eyebrow.toLowerCase()}.`);
 ---
 
 <main class="service-page">
@@ -21,7 +22,7 @@ const { eyebrow, title, highlight, description, features } = Astro.props;
 				<p class="eyebrow">{eyebrow}</p>
 				<h1>{title} <span>{highlight}</span></h1>
 				<p class="service-lead">{description}</p>
-				<a class="button button--primary" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Cotizar este servicio</a>
+				<a class="button button--primary" href={quoteUrl} target="_blank" rel="noopener noreferrer">Cotizar este servicio</a>
 			</div>
 			<div class="feature-panel" data-reveal="right" style="--reveal-delay:120ms">
 				<p>Qué incluye</p>

@@ -1,0 +1,32 @@
+---
+import ProjectGrid from '../projects/ProjectGrid.astro';
+---
+
+<section class="projects-showcase" aria-labelledby="projects-showcase-title">
+	<div class="container">
+		<header class="projects-heading" data-reveal="up">
+			<div>
+				<p class="eyebrow">Proyectos y conceptos</p>
+				<h2 id="projects-showcase-title">Ideas digitales llevadas a una experiencia real.</h2>
+			</div>
+			<div>
+				<p>Explora proyectos publicados para presentar paisajes, parcelaciones y oportunidades inmobiliarias en el sur de Chile.</p>
+				<a href="/proyectos">Ver todos los proyectos <span>→</span></a>
+			</div>
+		</header>
+		<ProjectGrid />
+	</div>
+</section>
+
+<style>
+	.projects-showcase { padding: var(--section-space) 0; }
+	.projects-heading { display: grid; margin-bottom: 62px; grid-template-columns: minmax(0,1.2fr) minmax(280px,.6fr); gap: clamp(40px,8vw,110px); align-items: end; }
+	.projects-heading h2 { max-width: 780px; }
+	.projects-heading > div:last-child > p { margin: 0; color: var(--color-muted); font-size: .94rem; line-height: 1.75; }
+	.projects-heading a { display: inline-flex; margin-top: 20px; align-items: center; gap: 10px; color: #d7e2f0; font-size: .7rem; font-weight: 800; }
+	.projects-heading a span { color: var(--color-sky); transition: transform .18s ease; }
+	.projects-heading a:hover span { transform: translateX(4px); }
+	@media(max-width:760px){
+		.projects-heading { grid-template-columns: 1fr; gap: 24px; }
+	}
+</style>

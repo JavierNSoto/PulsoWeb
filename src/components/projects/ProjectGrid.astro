@@ -1,0 +1,59 @@
+---
+import { projects } from '../../data/projects';
+
+interface Props {
+	limit?: number;
+}
+
+const { limit = projects.length } = Astro.props;
+const visibleProjects = projects.slice(0, limit);
+---
+
+<div class="project-grid" data-stagger>
+	{visibleProjects.map((project, index) => (
+		<article class:list={['project-card', `project-card--${project.tone}`]}>
+			<div class="project-preview">
+				<img src={project.image} alt={`Portada del sitio web ${project.title}`} width="960" height="600" loading="lazy" decoding="async" />
+				<span class="project-index">0{index + 1}</span>
+			</div>
+
+			<div class="project-copy">
+				<div class="project-meta"><span>{project.category}</span><small>{project.type}</small></div>
+				<h3>{project.title}</h3>
+				<p>{project.description}</p>
+				<ul>{project.tags.map((tag) => <li>{tag}</li>)}</ul>
+				{project.url && <a href={project.url} target="_blank" rel="noopener noreferrer">Visitar proyecto <span>↗</span></a>}
+			</div>
+		</article>
+	))}
+</div>
+
+<style>
+	.project-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+	.project-card { --project-rgb: var(--color-brand-rgb); min-width: 0; overflow: hidden; border: 1px solid rgba(148,163,184,.14); border-radius: 23px; background: linear-gradient(155deg,rgba(16,34,56,.96),rgba(7,18,32,.98)); transition: border-color .22s ease,transform .22s ease,box-shadow .22s ease; }
+	.project-card:hover { border-color: rgba(var(--project-rgb),.38); box-shadow: 0 25px 65px rgba(0,0,0,.24); transform: translateY(-5px); }
+	.project-preview { position: relative; height: 270px; overflow: hidden; border-bottom: 1px solid rgba(148,163,184,.1); background: #0b1829; }
+	.project-preview::after { position: absolute; inset: 45% 0 0; background: linear-gradient(transparent,rgba(7,17,31,.55)); content: ''; pointer-events: none; }
+	.project-preview img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .45s cubic-bezier(.2,.7,.2,1),filter .25s ease; }
+	.project-card:hover .project-preview img { filter: saturate(1.08); transform: scale(1.035); }
+	.project-index { position: absolute; top: 18px; right: 18px; z-index: 1; padding: 6px 8px; border: 1px solid rgba(255,255,255,.16); border-radius: 99px; background: rgba(7,17,31,.72); color: #fff; font-size: .55rem; font-weight: 800; letter-spacing: .15em; backdrop-filter: blur(8px); }
+	.project-copy { padding: 25px; }
+	.project-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+	.project-meta span { color: rgb(var(--project-rgb)); font-size: .55rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+	.project-meta small { color: #63748a; font-size: .55rem; }
+	.project-copy h3 { margin: 16px 0 11px; font-size: 1.65rem; font-weight: 800; letter-spacing: -.045em; }
+	.project-copy > p { min-height: 82px; margin: 0; color: var(--color-muted); font-size: .72rem; line-height: 1.65; }
+	.project-copy ul { display: flex; margin: 19px 0 0; padding: 0; flex-wrap: wrap; gap: 7px; list-style: none; }
+	.project-copy li { padding: 6px 8px; border: 1px solid rgba(var(--project-rgb),.13); border-radius: 99px; background: rgba(var(--project-rgb),.045); color: #91a1b5; font-size: .52rem; font-weight: 700; }
+	.project-copy > a { display: inline-flex; margin-top: 21px; align-items: center; gap: 9px; color: #d6e1ef; font-size: .65rem; font-weight: 800; }
+	.project-copy > a span { color: rgb(var(--project-rgb)); transition: transform .18s ease; }
+	.project-copy > a:hover span { transform: translate(2px,-2px); }
+	@media(max-width:900px){
+		.project-grid { grid-template-columns: 1fr; width: min(100%,650px); margin-inline: auto; }
+		.project-copy > p { min-height: 0; }
+	}
+	@media(max-width:520px){
+		.project-preview { height: 235px; }
+		.project-copy { padding: 22px; }
+	}
+</style>
