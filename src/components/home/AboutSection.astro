@@ -1,0 +1,93 @@
+---
+import { home } from '../../data/home';
+
+const quoteWords = home.quote.split(' ');
+---
+
+<section class="about" id="about" data-about>
+	<div class="about__inner">
+		<header class="about__header">
+			<p class="about__label" data-about-label>01 / SOBRE NOSOTROS</p>
+			<span class="about__rule" data-about-rule></span>
+		</header>
+		<h2 data-about-title>Sobre <em>Nosotros</em></h2>
+
+		<div class="about__grid">
+			<div>
+				<div class="about__stats">
+					{home.stats.map((stat) => (
+						<article class="about__stat" data-stat data-value={stat.value} data-suffix={stat.suffix}>
+							<strong>{stat.value}{stat.suffix}</strong>
+							<span>{stat.label}</span>
+						</article>
+					))}
+				</div>
+				<div class="about__presence">
+					<p>PRESENCIA / CLIENTES EN</p>
+					<div>{home.countries.map((country) => <span>{country}</span>)}</div>
+				</div>
+			</div>
+
+			<div class="about__copy">
+				<blockquote aria-label={home.quote}>
+					{quoteWords.map((word) => <span data-quote-word>{word}&nbsp;</span>)}
+				</blockquote>
+				<p>{home.paragraphs[0]}</p>
+				<p>{home.paragraphs[1]}</p>
+				<nav class="about__socials" aria-label="Redes sociales">
+					{home.links.social.map((link) => <a href={link.href} target="_blank" rel="noreferrer">{link.label} ↗</a>)}
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.about { border-top: 1px solid rgba(10,10,10,.08); background: var(--canvas); color: var(--ink); }
+	.about__inner { width: min(1440px,100%); margin: auto; padding: clamp(5rem,10vw,11rem) clamp(1.25rem,5vw,5rem); }
+	.about__header { display: flex; align-items: center; gap: 18px; }
+	.about__label,.about__presence p { margin: 0; color: rgba(10,10,10,.4); font-size: 10px; font-weight: 600; letter-spacing: .22em; }
+	.about__rule { height: 1px; flex: 1; background: rgba(10,10,10,.1); transform-origin: left; }
+	.about h2 { margin: clamp(2.2rem,5vw,5rem) 0 clamp(4rem,8vw,8rem); color: var(--ink); font-size: clamp(4rem,10vw,13rem); font-weight: 900; letter-spacing: -.08em; line-height: .88; }
+	.about h2 em { color: rgba(10,10,10,.3); font-family: var(--font-editorial); font-weight: 400; }
+	.about__grid { display: grid; gap: clamp(3rem,6vw,8rem); }
+	.about__stats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(2rem,4vw,4rem) clamp(1rem,3vw,3rem); }
+	.about__stat { padding-bottom: 14px; border-bottom: 1px solid rgba(10,10,10,.12); }
+	.about__stat strong { display: block; font-size: clamp(3.5rem,7vw,9rem); font-weight: 900; letter-spacing: -.08em; line-height: 1; }
+	.about__stat span { display: block; margin-top: 12px; color: rgba(10,10,10,.4); font-size: 10px; font-weight: 600; letter-spacing: .16em; line-height: 1.4; text-transform: uppercase; }
+	.about__presence { margin-top: clamp(3rem,6vw,6rem); }
+	.about__presence > div { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+	.about__presence span { padding: 8px 10px; border: 1px solid rgba(10,10,10,.12); font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+	.about__copy blockquote { margin: 0 0 3rem; font-family: var(--font-editorial); font-size: clamp(1.8rem,3.5vw,3.5rem); font-style: italic; line-height: 1.2; }
+	.about__copy blockquote span { display: inline-block; }
+	.about__copy > p { max-width: 650px; margin: 0 0 1.1rem; font-size: clamp(1rem,1.3vw,1.18rem); line-height: 1.7; }
+	.about__copy > p:nth-of-type(1) { color: rgba(10,10,10,.55); }
+	.about__copy > p:nth-of-type(2) { color: rgba(10,10,10,.4); }
+	.about__socials { display: flex; flex-wrap: wrap; gap: 18px; margin: 2.2rem 0 3rem; }
+	.about__socials a { padding-bottom: 4px; border-bottom: 1px solid rgba(10,10,10,.16); font-size: 10px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; transition: border-color .2s ease; }
+	.about__socials a:hover { border-color: var(--ink); }
+	@media(min-width:1024px) { .about__grid { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); } }
+	@media(prefers-reduced-motion:reduce) { .about [data-about-rule] { transform: none !important; } }
+</style>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const section = document.querySelector<HTMLElement>('[data-about]');
+	if (section && !reduceMotion && !section.dataset.animated) {
+		section.dataset.animated = 'true';
+		const context = gsap.context(() => {
+			const header = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top 78%', once: true } });
+			header.from('[data-about-label]', { x: -12, autoAlpha: 0, duration: .6 }).from('[data-about-rule]', { scaleX: 0, duration: 1.4, ease: 'power4.inOut' }, 0).from('[data-about-title]', { y: 32, autoAlpha: 0, duration: .85, ease: 'power3.out' }, .15);
+			gsap.from('[data-stat]', { clipPath: 'inset(0 0 100% 0)', duration: .75, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.about__stats', start: 'top 80%', once: true } });
+			gsap.from('[data-quote-word]', { autoAlpha: 0, y: 14, filter: 'blur(4px)', duration: .55, stagger: .045, ease: 'power3.out', scrollTrigger: { trigger: '.about__copy', start: 'top 80%', once: true } });
+			const stats = [...section.querySelectorAll<HTMLElement>('[data-stat]')];
+			stats.forEach((stat) => { const number = stat.querySelector('strong'); if (number) number.textContent = `0${stat.dataset.suffix ?? ''}`; });
+			ScrollTrigger.create({ trigger: '.about__stats', start: 'top 78%', once: true, onEnter: () => stats.forEach((stat) => { const target = Number(stat.dataset.value); const suffix = stat.dataset.suffix ?? ''; const number = stat.querySelector('strong'); gsap.to({ value: 0 }, { value: target, duration: 2.2, ease: 'power4.out', onUpdate() { if (number) number.textContent = `${Math.round(this.targets()[0].value)}${suffix}`; } }); }) });
+		}, section);
+		window.addEventListener('pagehide', () => context.revert(), { once: true });
+	}
+</script>

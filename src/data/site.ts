@@ -20,12 +20,12 @@ export const services = [
 ] as const;
 
 export const navigation = [
-	{ label: 'Inicio', href: '/#inicio' },
-	{ label: 'Páginas web', href: '/#paginas-web' },
-	{ label: 'Proyectos', href: '/proyectos' },
-	{ label: 'Cómo trabajamos', href: '/#proceso' },
-	{ label: 'Preguntas frecuentes', href: '/#preguntas' },
-	{ label: 'Contacto', href: '/#contacto' },
+	{ label: 'Inicio', href: '/#home' },
+	{ label: 'Nosotros', href: '/#about' },
+	{ label: 'Trabajos', href: '/#work' },
+	{ label: 'Servicios', href: '/#services' },
+	{ label: 'Planes', href: '/#plans' },
+	{ label: 'FAQ', href: '/#faq' },
 ] as const;
 
 export const contactEmail = 'contacto@pulsoweb.cl';

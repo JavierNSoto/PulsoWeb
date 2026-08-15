@@ -1,130 +1,87 @@
 ---
-import Logo from '../ui/Logo.astro';
-import { navigation, services, whatsappLinks } from '../../data/site';
+import { home } from '../../data/home';
+import { navigation } from '../../data/site';
 
-const path = Astro.url.pathname;
-const isService = path.startsWith('/servicios/');
+const links = navigation;
 ---
 
-<header class="site-nav" data-navbar>
-	<nav class="nav-shell" aria-label="Navegación principal">
-		<Logo />
-
-		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
-			<span class="sr-only">Abrir menú</span>
-			<span></span><span></span>
-		</button>
-
-		<div class="nav-menu" id="nav-menu">
-			<ul class="nav-links">
-				<li><a href={navigation[0].href}>{navigation[0].label}</a></li>
-				<li><a href={navigation[1].href}>{navigation[1].label}</a></li>
-				<li><a href={navigation[3].href}>{navigation[3].label}</a></li>
-				<li class:list={['services-dropdown', { 'is-current': isService }]}>
-					<span class="services-control">
-						<a class="services-link" href="/#servicios">Servicios</a>
-						<button class="services-trigger" type="button" aria-expanded="false" aria-controls="services-dropdown" aria-label="Mostrar páginas de servicios">
-							<svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
-						</button>
-					</span>
-					<div class="services-menu" id="services-dropdown">
-						<p>Servicios digitales</p>
-						{services.map((service) => (
-							<a class:list={{ active: path === service.href }} href={service.href} aria-current={path === service.href ? 'page' : undefined}>
-								<span class="service-mark" aria-hidden="true">
-									{service.icon === 'refresh' && <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6" /></svg>}
-									{service.icon === 'shield' && <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.8 2.8 8.2 7 10 4.2-1.8 7-5.2 7-10V6l-7-3Z" /></svg>}
-									{service.icon === 'message' && <svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8.5 8L5 21l1.5-5.4A8 8 0 1 1 20 11.5Z" /></svg>}
-								</span>
-								<span><strong>{service.title}</strong><small>{service.description}</small></span>
-							</a>
-						))}
-					</div>
-				</li>
-				<li><a class:list={{ active: path.startsWith('/proyectos') }} href={navigation[2].href} aria-current={path.startsWith('/proyectos') ? 'page' : undefined}>Proyectos</a></li>
-			</ul>
-
-			<a class="quote-button" href={whatsappLinks.general} target="_blank" rel="noopener noreferrer">
-				Cotizar proyecto
-			</a>
-		</div>
+<header class="editorial-nav" data-navbar>
+	<nav class="editorial-nav__desktop" aria-label="Navegación principal">
+		<a class="editorial-nav__logo" href="/#home" aria-label="PulsoWeb, inicio"><img src={home.assets.logo} alt="PulsoWeb" width="150" height="46" /></a>
+		<ul>{links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}</ul>
+		<a class="editorial-nav__cta" href={home.links.contact} target="_blank" rel="noopener noreferrer">CONTACTAR <b>↗</b></a>
 	</nav>
+	<div class="editorial-nav__mobile">
+		<a class="editorial-nav__logo editorial-nav__mobile-pill" href="/#home" aria-label="PulsoWeb, inicio"><img src={home.assets.logo} alt="PulsoWeb" width="150" height="46" /></a>
+		<button type="button" class="editorial-nav__toggle editorial-nav__mobile-pill" aria-expanded="false" aria-controls="mobile-menu"><span class="sr-only">Abrir menú</span><i></i><i></i></button>
+	</div>
+	<div class="editorial-nav__menu" id="mobile-menu" aria-hidden="true">
+		<button type="button" class="editorial-nav__close" aria-label="Cerrar menú">×</button>
+		<ul>{links.map((link) => <li><a href={link.href}>{link.label}<b>↗</b></a></li>)}</ul>
+		<a class="editorial-nav__menu-cta" href={home.links.contact} target="_blank" rel="noopener noreferrer">CONTACTAR</a>
+	</div>
 </header>
 
-<script>
-	const navbar = document.querySelector<HTMLElement>('[data-navbar]');
-	const toggle = navbar?.querySelector<HTMLButtonElement>('.nav-toggle');
-	const menu = navbar?.querySelector<HTMLElement>('.nav-menu');
-	const servicesRoot = navbar?.querySelector<HTMLElement>('.services-dropdown');
-	const servicesTrigger = navbar?.querySelector<HTMLButtonElement>('.services-trigger');
-
-	const setMainMenu = (open: boolean) => {
-		toggle?.setAttribute('aria-expanded', String(open));
-		menu?.classList.toggle('is-open', open);
-		document.body.classList.toggle('menu-open', open);
-	};
-
-	toggle?.addEventListener('click', () => setMainMenu(toggle.getAttribute('aria-expanded') !== 'true'));
-	servicesTrigger?.addEventListener('click', () => {
-		const open = servicesTrigger.getAttribute('aria-expanded') !== 'true';
-		servicesTrigger.setAttribute('aria-expanded', String(open));
-		servicesRoot?.classList.toggle('is-open', open);
-	});
-	menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMainMenu(false)));
-	document.addEventListener('click', (event) => {
-		if (servicesRoot && !servicesRoot.contains(event.target as Node)) {
-			servicesRoot.classList.remove('is-open');
-			servicesTrigger?.setAttribute('aria-expanded', 'false');
-		}
-	});
-</script>
-
 <style>
-	.site-nav { position: fixed; inset: 0 0 auto; z-index: 100; padding: 27px 20px 0; pointer-events: none; }
-	.nav-shell { display: flex; width: min(1180px,100%); min-height: 64px; margin: 0 auto; padding: 0 10px 0 16px; align-items: center; justify-content: space-between; border: 1px solid rgba(125,158,201,.2); border-radius: 18px; background: #07111f; pointer-events: auto; animation: nav-enter .75s cubic-bezier(.2,.72,.2,1) both; }
-	.nav-menu,.nav-links { display: flex; align-items: center; }
-	.nav-menu { gap: clamp(24px,3.5vw,52px); }
-	.nav-links { gap: clamp(12px,2vw,27px); margin: 0; padding: 0; list-style: none; }
-	.nav-links > li > a,.services-link { display: flex; min-height: 42px; align-items: center; color: #b8c4d8; font: 700 .8rem var(--font-primary); transition: color .18s ease; }
-	.nav-links > li > a:hover,.nav-links > li > a.active,.services-link:hover,.services-dropdown.is-current .services-link { color: var(--color-white); }
-	.services-dropdown { position: relative; }
-	.services-control { display: flex; align-items: center; }
-	.services-trigger { display: grid; width: 23px; height: 36px; padding: 0; place-items: center; border: 0; background: transparent; color: #b8c4d8; cursor: pointer; }
-	.services-trigger svg { width: 9px; transition: transform .2s ease; }
-	.services-dropdown.is-open .services-trigger svg { transform: rotate(180deg); }
-	.services-menu { position: absolute; top: calc(100% + 15px); left: 50%; width: 330px; padding: 10px; border: 1px solid rgba(125,158,201,.18); border-radius: 16px; background: #0a1627; box-shadow: 0 25px 60px rgba(0,0,0,.45); opacity: 0; pointer-events: none; transform: translate(-50%,-7px); transition: opacity .18s ease,transform .18s ease; }
-	.services-menu::before { position: absolute; inset: -16px 0 auto; height: 16px; content: ''; }
-	.services-menu > p { margin: 5px 8px 8px; color: #64748b; font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-	.services-dropdown:hover .services-menu,.services-dropdown:focus-within .services-menu,.services-dropdown.is-open .services-menu { opacity: 1; pointer-events: auto; transform: translate(-50%,0); }
-	.services-menu a { display: flex; gap: 11px; align-items: center; padding: 11px; border-radius: 11px; transition: background .18s ease; }
-	.services-menu a:hover,.services-menu a.active { background: rgba(var(--color-brand-rgb),.11); }
-	.service-mark { display: grid; flex: 0 0 34px; height: 34px; place-items: center; border: 1px solid rgba(var(--color-brand-rgb),.18); border-radius: 9px; background: rgba(var(--color-brand-rgb),.07); color: var(--color-sky); }
-	.service-mark svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-	.services-menu strong,.services-menu small { display: block; }
-	.services-menu strong { font-size: .78rem; }
-	.services-menu small { max-width: 225px; margin-top: 3px; color: var(--color-muted); font-size: .65rem; line-height: 1.35; }
-	.quote-button { display: inline-grid; min-height: 42px; padding: 0 18px; place-items: center; border: 1px solid rgba(139,232,255,.34); border-radius: 11px; background: linear-gradient(120deg,var(--color-brand-deep),var(--color-brand)); box-shadow: inset 0 1px rgba(255,255,255,.16),0 9px 25px rgba(var(--color-brand-rgb),.2); color: #fff; font-size: .77rem; font-weight: 800; transition: transform .18s ease,box-shadow .18s ease; }
-	.quote-button:hover { box-shadow: inset 0 1px rgba(255,255,255,.18),0 13px 32px rgba(var(--color-brand-rgb),.32); transform: translateY(-2px); }
-	.nav-toggle { display: none; width: 42px; height: 42px; padding: 11px 9px; border: 1px solid var(--color-slate); border-radius: 10px; background: #0d1b2e; cursor: pointer; }
-	.nav-toggle > span:not(.sr-only) { display: block; width: 21px; height: 2px; margin: 5px auto; border-radius: 2px; background: var(--color-white); transition: transform .18s ease; }
-	.nav-toggle[aria-expanded='true'] > span:nth-child(2) { transform: translateY(3.5px) rotate(45deg); }
-	.nav-toggle[aria-expanded='true'] > span:nth-child(3) { transform: translateY(-3.5px) rotate(-45deg); }
-	@keyframes nav-enter { from { opacity: 0; translate: 0 -22px; } to { opacity: 1; translate: 0 0; } }
-	@media(max-width:980px){
-		.site-nav { padding: 14px 14px 0; }
-		.nav-shell { min-height: 60px; padding-right: 9px; }
-		.nav-toggle { display: block; }
-		.nav-menu { position: absolute; top: calc(100% + 10px); right: 0; left: 0; display: grid; max-height: 0; overflow: hidden; gap: 12px; padding: 0 11px; border: 1px solid transparent; border-radius: 16px; background: #07111f; opacity: 0; visibility: hidden; transition: max-height .28s ease,padding .28s ease,opacity .18s ease; }
-		.nav-menu.is-open { max-height: 620px; padding: 11px; border-color: rgba(125,158,201,.2); opacity: 1; visibility: visible; }
-		.nav-links { display: grid; gap: 1px; }
-		.nav-links > li > a { width: 100%; min-height: 44px; padding: 0 10px; }
-		.services-control { width: 100%; padding-left: 10px; justify-content: space-between; }
-		.services-link { flex: 1; min-height: 44px; }
-		.services-trigger { width: 44px; height: 44px; }
-		.services-menu { position: static; width: 100%; max-height: 0; overflow: hidden; padding: 0 6px; border: 0; box-shadow: none; opacity: 1; pointer-events: auto; transform: none; transition: max-height .25s ease,padding .25s ease; }
-		.services-dropdown:hover .services-menu,.services-dropdown:focus-within .services-menu { max-height: 0; padding: 0 6px; transform: none; }
-		.services-dropdown.is-open .services-menu { max-height: 270px; padding: 6px; transform: none; }
-		.quote-button { min-height: 44px; }
+	.editorial-nav { position: fixed; z-index: 100; top: 16px; right: 0; left: 0; pointer-events: none; }
+	.editorial-nav a,.editorial-nav button { pointer-events: auto; }
+	.editorial-nav__desktop { display: flex; width: min(920px,calc(100vw - 40px)); min-height: 58px; margin: auto; padding: 6px 10px 6px 14px; align-items: center; border: 1px solid rgba(255,255,255,.08); border-radius: 999px; background: rgba(10,10,10,.95); box-shadow: 0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(28px); color: #d9d9d9; transition: background .25s ease,backdrop-filter .25s ease,box-shadow .25s ease; }
+	.editorial-nav.is-scrolled .editorial-nav__desktop { border-color: rgba(255,255,255,.1); background: rgba(10,10,10,.75); box-shadow: 0 5px 24px rgba(0,0,0,.3); backdrop-filter: blur(16px); }
+	.editorial-nav__logo { display: flex; flex: 0 0 auto; align-items: center; }
+	.editorial-nav__logo img { display: block; width: auto; height: 46px; max-width: 150px; object-fit: contain; }
+	.editorial-nav__desktop ul { position: absolute; left: 50%; display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; transform: translateX(-50%); }
+	.editorial-nav__desktop li a { display: block; padding: 9px 11px; border-radius: 999px; color: #d9d9d9; font-size: 10px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; transition: background .2s ease; white-space: nowrap; }
+	.editorial-nav__desktop li a:hover { background: rgba(255,255,255,.08); }
+	.editorial-nav__cta { display: inline-flex; gap: 10px; min-height: 42px; margin-left: auto; padding: 0 7px 0 15px; align-items: center; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 10px; font-weight: 700; letter-spacing: .13em; }
+	.editorial-nav__cta b { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%; background: rgba(10,10,10,.1); font-size: 14px; }
+	.editorial-nav__mobile,.editorial-nav__menu { display: none; }
+	@media(max-width:767px) {
+		.editorial-nav { top: 16px; }
+		.editorial-nav__desktop { display: none; }
+		.editorial-nav__mobile { display: flex; padding: 0 16px; justify-content: space-between; }
+		.editorial-nav__mobile-pill { display: grid; height: 58px; padding: 6px 12px; place-items: center; border: 1px solid rgba(255,255,255,.08); border-radius: 999px; background: rgba(10,10,10,.95); box-shadow: 0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(28px); }
+		.editorial-nav__mobile .editorial-nav__logo { padding: 6px 14px; }
+		.editorial-nav__toggle { width: 58px; cursor: pointer; }
+		.editorial-nav__toggle i { display: block; width: 21px; height: 1px; margin: 4px; background: #fff; transition: transform .25s ease; }
+		.editorial-nav.menu-open .editorial-nav__toggle i:first-of-type { transform: translateY(4.5px) rotate(45deg); }
+		.editorial-nav.menu-open .editorial-nav__toggle i:last-of-type { transform: translateY(-4.5px) rotate(-45deg); }
+		.editorial-nav__menu { position: fixed; inset: -16px 0 0; z-index: -1; min-height: 100svh; padding: 8rem 24px 2rem; background: rgba(10,10,10,.95); backdrop-filter: blur(28px); clip-path: inset(0 0 100% 0); pointer-events: none; transition: clip-path .4s var(--ease-out-expo); }
+		.editorial-nav.menu-open .editorial-nav__menu { clip-path: inset(0 0 0 0); pointer-events: auto; }
+		.editorial-nav__menu ul { margin: 0; padding: 0; list-style: none; }
+		.editorial-nav__menu li { border-bottom: 1px solid rgba(255,255,255,.12); opacity: 0; transform: translateY(16px); }
+		.editorial-nav.menu-open .editorial-nav__menu li { opacity: 1; transform: none; transition: opacity .35s var(--ease-out-expo),transform .35s var(--ease-out-expo); }
+		.editorial-nav.menu-open .editorial-nav__menu li:nth-child(2) { transition-delay: .06s; }.editorial-nav.menu-open .editorial-nav__menu li:nth-child(3) { transition-delay: .12s; }
+		.editorial-nav__menu li a { display: flex; padding: 20px 0; justify-content: space-between; color: #fff; font-size: clamp(2.2rem,10vw,4rem); font-weight: 900; letter-spacing: -.06em; }
+		.editorial-nav__menu li b { font-size: .5em; font-weight: 400; }
+		.editorial-nav__close { position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; background: transparent; color: #fff; font-size: 32px; cursor: pointer; }
+		.editorial-nav__menu-cta { display: inline-flex; margin-top: 40px; padding: 14px 18px; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 10px; font-weight: 700; letter-spacing: .15em; }
 	}
-	@media(prefers-reduced-motion:reduce){ .nav-shell { animation: none; } }
 </style>
+
+<script>
+	import { gsap } from 'gsap';
+
+	const navbar = document.querySelector<HTMLElement>('[data-navbar]');
+	if (navbar && !navbar.dataset.ready) {
+		navbar.dataset.ready = 'true';
+		const desktop = navbar.querySelector<HTMLElement>('.editorial-nav__desktop');
+		const toggle = navbar.querySelector<HTMLButtonElement>('.editorial-nav__toggle');
+		const menu = navbar.querySelector<HTMLElement>('.editorial-nav__menu');
+		const close = navbar.querySelector<HTMLButtonElement>('.editorial-nav__close');
+		const setMenu = (open: boolean) => { navbar.classList.toggle('menu-open', open); toggle?.setAttribute('aria-expanded', String(open)); menu?.setAttribute('aria-hidden', String(!open)); document.body.classList.toggle('menu-open', open); };
+		const updateNav = () => {
+			const scrolled = window.scrollY > 60; navbar.classList.toggle('is-scrolled', scrolled);
+			if (desktop && window.innerWidth >= 768) gsap.to(desktop, { width: scrolled ? Math.min(window.innerWidth - 2 * Math.min(Math.max(window.innerWidth * .04, 20), 80), 980) : Math.min(920, window.innerWidth - 40), duration: .65, ease: 'elastic.out(1, .7)', overwrite: 'auto' });
+		};
+		toggle?.addEventListener('click', () => setMenu(!navbar.classList.contains('menu-open'))); close?.addEventListener('click', () => setMenu(false)); menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+		const onKeydown = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenu(false); };
+		const onAnchorClick = (event: MouseEvent) => {
+			const anchor = (event.currentTarget as HTMLAnchorElement); const hash = new URL(anchor.href).hash; const target = hash && document.querySelector<HTMLElement>(hash);
+			if (!target || !window.__pulsoLenis) return;
+			event.preventDefault(); window.history.pushState(null, '', hash); window.__pulsoLenis.scrollTo(target, { duration: 1.6, easing: (value: number) => value < .5 ? 2 * value * value : 1 - Math.pow(-2 * value + 2, 2) / 2 });
+		};
+		const anchors = [...navbar.querySelectorAll<HTMLAnchorElement>('a[href*="#"]')]; anchors.forEach((anchor) => anchor.addEventListener('click', onAnchorClick));
+		window.addEventListener('scroll', updateNav, { passive: true }); window.addEventListener('resize', updateNav); document.addEventListener('keydown', onKeydown); updateNav();
+		window.addEventListener('pagehide', () => { window.removeEventListener('scroll', updateNav); window.removeEventListener('resize', updateNav); document.removeEventListener('keydown', onKeydown); anchors.forEach((anchor) => anchor.removeEventListener('click', onAnchorClick)); gsap.killTweensOf(desktop); }, { once: true });
+	}
+</script>
