@@ -1,90 +1,27 @@
 ---
-import Logo from '../ui/Logo.astro';
-import { contactEmail, navigation, services, whatsappDisplay, whatsappLinks } from '../../data/site';
+import { home } from '../../data/home';
+import { navigation } from '../../data/site';
 
 const currentYear = new Date().getFullYear();
-const footerNavigation = [
-	navigation[0],
-	navigation[1],
-	{ label: 'Servicios', href: '/#servicios' },
-	navigation[3],
-	navigation[2],
-	navigation[4],
-	navigation[5],
-];
 ---
 
-<footer class="site-footer">
-	<div class="container">
-		<section class="footer-cta" aria-labelledby="footer-cta-title" data-reveal="scale">
-			<div>
-				<p>¿Tienes un proyecto en mente?</p>
-				<h2 id="footer-cta-title">Démosle un nuevo pulso a tu negocio.</h2>
-			</div>
-			<a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer">
-				<span>Cotizar proyecto</span><i>↗</i>
-			</a>
-		</section>
-
-		<div class="footer-main" data-reveal="up">
-			<div class="footer-brand">
-				<Logo />
-				<p>Diseñamos y desarrollamos sitios web claros, rápidos y preparados para hacer crecer tu negocio.</p>
-				<div class="footer-contact">
-					<a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-					<a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer">{whatsappDisplay}</a>
-					<a href="https://pulsoweb.cl">pulsoweb.cl</a>
-				</div>
-			</div>
-
-			<nav class="footer-column" aria-label="Navegación del pie de página">
-				<h3>Navegación</h3>
-				<ul>
-					{footerNavigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-				</ul>
-			</nav>
-
-			<nav class="footer-column footer-column--services" aria-label="Servicios de PulsoWeb">
-				<h3>Servicios</h3>
-				<ul>{services.map((service) => <li><a href={service.href}>{service.title}</a></li>)}</ul>
-			</nav>
-		</div>
-
-		<div class="footer-bottom" data-reveal="fade">
-			<p>© {currentYear} PulsoWeb. Todos los derechos reservados.</p>
-			<span>Diseño y desarrollo web en Chile.</span>
-		</div>
+<footer class="footer" data-footer>
+	<div class="footer__wordmark" aria-hidden="true">PulsoWeb</div>
+	<div class="footer__inner">
+		<div class="footer__top"><a class="footer__brand" href="/#home" data-footer-brand aria-label="PulsoWeb, inicio"><img src={home.assets.logo} alt="PulsoWeb" width="150" height="46" /></a></div>
+		<nav class="footer__nav" data-footer-nav aria-label="Navegación del pie"><ul>{navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}</ul></nav>
+		<div class="footer__bottom" data-footer-bottom><p>© {currentYear} PulsoWeb. Todos los derechos reservados.</p></div>
 	</div>
 </footer>
 
 <style>
-	.site-footer { position: relative; padding: 0 0 26px; background: transparent; }
-	.footer-cta { display: flex; padding: clamp(30px,5vw,52px); align-items: center; justify-content: space-between; gap: 40px; overflow: hidden; border: 1px solid rgba(148,163,184,.15); border-radius: 25px; background: #0d1b2e; }
-	.footer-cta p { margin: 0 0 10px; color: var(--color-sky); font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-	.footer-cta h2 { max-width: 690px; font-size: clamp(1.9rem,4vw,3.35rem); }
-	.footer-cta > a { display: inline-flex; min-height: 52px; padding: 0 20px; flex: 0 0 auto; align-items: center; gap: 25px; border: 1px solid rgba(139,232,255,.3); border-radius: 12px; background: linear-gradient(120deg,var(--color-brand-deep),var(--color-brand)); color: #fff; font-size: .78rem; font-weight: 800; transition: transform .18s ease,box-shadow .18s ease; }
-	.footer-cta > a:hover { box-shadow: 0 14px 34px rgba(var(--color-brand-rgb),.22); transform: translateY(-2px); }
-	.footer-cta i { font-size: 1rem; font-style: normal; }
-	.footer-main { display: grid; padding: 65px 0 55px; grid-template-columns: minmax(280px,1.4fr) minmax(150px,.55fr) minmax(220px,.7fr); gap: clamp(45px,9vw,125px); }
-	.footer-brand > p { max-width: 390px; margin: 24px 0 18px; color: var(--color-muted); font-size: .82rem; line-height: 1.7; }
-	.footer-contact { display: flex; flex-wrap: wrap; gap: 9px 18px; }
-	.footer-contact a { color: var(--color-sky); font-size: .72rem; font-weight: 700; transition: color .18s ease; }
-	.footer-contact a:hover { color: #bae6fd; }
-	.footer-column h3 { margin: 4px 0 23px; color: #dce5f2; font-size: .68rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
-	.footer-column ul { display: grid; margin: 0; padding: 0; gap: 13px; list-style: none; }
-	.footer-column a { color: var(--color-muted); font-size: .74rem; font-weight: 600; transition: color .18s ease; }
-	.footer-column a:hover { color: var(--color-white); }
-	.footer-bottom { display: flex; padding-top: 23px; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(148,163,184,.12); color: #596b82; font-size: .64rem; }
-	.footer-bottom p { margin: 0; }
-	@media(max-width:760px){
-		.footer-cta { align-items: flex-start; flex-direction: column; }
-		.footer-main { grid-template-columns: repeat(2,1fr); }
-		.footer-brand { grid-column: 1 / -1; }
-	}
-	@media(max-width:500px){
-		.footer-cta > a { width: 100%; justify-content: space-between; }
-		.footer-main { grid-template-columns: 1fr; }
-		.footer-brand { grid-column: auto; }
-		.footer-bottom { align-items: flex-start; flex-direction: column; }
-	}
+	.footer { position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,.06); background: #0a0a0a; color: #fff; }.footer__inner { position: relative; z-index: 1; width: min(1440px,100%); margin: auto; padding: clamp(3rem,5vw,5rem) clamp(1.25rem,5vw,5rem); }.footer__wordmark { position: absolute; bottom: -1vw; left: 50%; color: rgba(255,255,255,.032); font-size: clamp(4.5rem,18vw,22rem); font-weight: 900; letter-spacing: -.08em; line-height: .82; pointer-events: none; transform: translateX(-50%); white-space: nowrap; }.footer__top { display: flex; justify-content: flex-start; }.footer__brand { opacity: .4; transition: opacity .3s ease; }.footer__brand:hover { opacity: .7; }.footer__brand img { display: block; width: auto; height: 46px; max-width: 150px; object-fit: contain; }.footer__nav { margin: clamp(3rem,5vw,5rem) 0; }.footer__nav ul { display: flex; flex-wrap: wrap; gap: 16px 32px; margin: 0; padding: 0; list-style: none; }.footer__nav a { color: rgba(255,255,255,.22); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; transition: color .2s ease; }.footer__nav a:hover { color: rgba(255,255,255,.6); }.footer__bottom { padding-top: 32px; border-top: 1px solid rgba(255,255,255,.06); color: rgba(255,255,255,.16); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }.footer__bottom p { margin: 0; }@media(max-width:767px) { .footer__top,.footer__bottom { justify-content: center; text-align: center; }.footer__nav ul { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px 8px; text-align: center; } }
+	@media(prefers-reduced-motion:reduce) { .footer [data-footer-brand],.footer [data-footer-nav],.footer [data-footer-bottom] { opacity: 1 !important; transform: none !important; } }
 </style>
+
+<script>
+	const footer = document.querySelector<HTMLElement>('[data-footer]');
+	if (footer && !footer.dataset.ready && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		footer.dataset.ready = 'true'; const targets = [...footer.querySelectorAll<HTMLElement>('[data-footer-brand],[data-footer-nav],[data-footer-bottom]')]; const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { targets.forEach((target, index) => { target.style.transition = `opacity .5s ${(.1 + index * .05)}s var(--ease-out-expo),transform .5s ${(.1 + index * .05)}s var(--ease-out-expo)`; target.style.opacity = '1'; target.style.transform = 'none'; }); observer.disconnect(); } }, { threshold: .12 }); targets.forEach((target) => { target.style.opacity = '0'; target.style.transform = 'translateY(10px)'; }); observer.observe(footer);
+	}
+</script>

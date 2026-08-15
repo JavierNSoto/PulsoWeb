@@ -1,4 +1,8 @@
 :root {
+	--ink: #0a0a0a;
+	--canvas: #fff;
+	--muted: rgba(10,10,10,.4);
+	--ease-out-expo: cubic-bezier(.22,1,.36,1);
 	--color-night: #07111f;
 	--color-deep: #0d1b2e;
 	--color-brand: #00c7fd;
@@ -10,7 +14,8 @@
 	--color-white: #f8fafc;
 	--color-muted: #94a3b8;
 	--color-slate: #1e293b;
-	--font-primary: 'Manrope', system-ui, sans-serif;
+	--font-primary: 'Satoshi Variable', system-ui, sans-serif;
+	--font-editorial: 'Instrument Serif', Georgia, serif;
 	--section-space: clamp(100px, 10vw, 140px);
 }
 
@@ -23,12 +28,16 @@ html {
 
 body {
 	margin: 0;
-	background: var(--color-night);
-	color: var(--color-white);
+	overflow-x: hidden;
+	background: #fff;
+	color: #0a0a0a;
 	font-family: var(--font-primary);
 	font-weight: 400;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
+
+@media(min-width:768px) { ::-webkit-scrollbar { width: 2px; } ::-webkit-scrollbar-thumb { background: var(--ink); } }
 
 a { color: inherit; text-decoration: none; }
 

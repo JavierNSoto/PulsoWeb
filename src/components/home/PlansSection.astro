@@ -1,0 +1,21 @@
+---
+import { webPlans } from '../../data/webPlans';
+import { whatsappLinks } from '../../data/site';
+
+const plans = webPlans.map((plan, index) => ({ ...plan, featured: index === 1, href: index === 0 ? whatsappLinks.website : index === 1 ? whatsappLinks.ecommerce : whatsappLinks.general }));
+---
+
+<section class="plans" id="plans" aria-labelledby="plans-title">
+	<div class="plans__inner">
+		<header><p>04 / PLANES</p><i></i><span>ELIGE EL PUNTO DE PARTIDA</span></header>
+		<h2 id="plans-title">Nuestros <em>precios</em></h2>
+		<div class="plans__grid">
+			{plans.map((plan, index) => <article class:list={{ featured: plan.featured }}><p>{String(index + 1).padStart(2, '0')} / {plan.type}</p>{plan.featured && <b class="plans__featured">MÁS ELEGIDO</b>}<h3>{plan.name}</h3><span>{plan.description}</span><ul>{plan.features.slice(0, 5).map((feature) => <li>{feature}</li>)}</ul><a href={plan.href} target="_blank" rel="noopener noreferrer">{plan.cta} <b>↗</b></a></article>)}
+		</div>
+	</div>
+</section>
+
+<style>
+	.plans { background: #fff; color: #0a0a0a; }.plans__inner { width: min(1440px,100%); margin: auto; padding: clamp(5rem,10vw,11rem) clamp(1.25rem,5vw,5rem); }.plans header { display: flex; gap: 16px; align-items: center; color: rgba(10,10,10,.4); font-size: 10px; font-weight: 600; letter-spacing: .18em; }.plans header p { margin: 0; }.plans header i { height: 1px; flex: 1; background: rgba(10,10,10,.12); }.plans header span { white-space: nowrap; }.plans h2 { margin: clamp(2.4rem,5vw,5rem) 0 clamp(3rem,6vw,6rem); font-size: clamp(3rem,7vw,8rem); font-weight: 900; letter-spacing: -.08em; line-height: .88; }.plans h2 em { color: rgba(10,10,10,.3); font-family: var(--font-editorial); font-weight: 400; }.plans__grid { display: grid; gap: 12px; }.plans article { position: relative; display: flex; min-height: 440px; padding: clamp(1.5rem,3vw,2.5rem); flex-direction: column; border: 1px solid rgba(10,10,10,.12); }.plans article > p { margin: 0; color: rgba(10,10,10,.4); font-size: 10px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }.plans h3 { margin: 3rem 0 12px; font-size: clamp(2rem,3vw,3rem); font-weight: 900; letter-spacing: -.065em; }.plans article > span { color: rgba(10,10,10,.55); font-size: 14px; line-height: 1.65; }.plans ul { display: grid; margin: 26px 0; padding: 0; gap: 9px; list-style: none; }.plans li { color: rgba(10,10,10,.52); font-size: 12px; }.plans li::before { margin-right: 8px; content: '·'; }.plans article > a { display: flex; min-height: 46px; margin-top: auto; padding: 0 14px; align-items: center; justify-content: space-between; border: 1px solid rgba(10,10,10,.22); border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }.plans article.featured { border-color: #0a0a0a; background: #0a0a0a; color: #fff; }.plans article.featured > p,.plans article.featured > span,.plans article.featured li { color: rgba(255,255,255,.58); }.plans article.featured > a { border-color: rgba(255,255,255,.25); }.plans__featured { position: absolute; top: 20px; right: 20px; padding: 6px 8px; background: #fff; color: #0a0a0a; font-size: 9px; letter-spacing: .12em; }.plans article > a:hover { background: #0a0a0a; color: #fff; }.plans article.featured > a:hover { background: #fff; color: #0a0a0a; }@media(min-width:768px) { .plans__grid { grid-template-columns: repeat(3,minmax(0,1fr)); }.plans article:nth-child(2) { transform: translateY(-18px); } }@media(max-width:520px) { .plans header span { display: none; } }
+	.plans__grid { gap: 16px; }.plans article { border-radius: 22px; }
+</style>

@@ -45,4 +45,12 @@ export const webPlans: WebPlan[] = [
 		],
 		cta: 'Cotizar Ecommerce',
 	},
+	{
+		name: 'Proyecto a medida',
+		type: 'Solución personalizada',
+		description: 'Para negocios que requieren una experiencia digital diseñada alrededor de objetivos específicos.',
+		featuresTitle: 'Este servicio puede contemplar',
+		features: ['Estrategia digital', 'Diseño UX / UI', 'Desarrollo personalizado', 'Integraciones', 'Soporte de lanzamiento'],
+		cta: 'Cotizar proyecto',
+	},
 ];
