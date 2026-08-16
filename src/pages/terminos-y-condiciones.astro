@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { contactEmail } from '../data/site';
+
+const updatedAt = '16 de agosto de 2026';
+---
+
+<BaseLayout title="Términos y condiciones | PulsoWeb" description="Condiciones generales de uso del sitio y contratación de servicios de PulsoWeb.">
+	<main class="terms">
+		<header class="terms__hero">
+			<div class="terms__hero-inner">
+				<a href="/">← Volver al inicio</a>
+				<p>Información legal</p>
+				<h1>Términos y<br /><span>condiciones.</span></h1>
+				<div><p>Condiciones generales de uso del sitio y prestación de servicios.</p><small>Última actualización: {updatedAt}</small></div>
+			</div>
+		</header>
+
+		<div class="terms__layout">
+			<aside aria-label="Contenido de esta página">
+				<p>Contenido</p>
+				<ol>
+					<li><a href="#general">Condiciones generales</a></li>
+					<li><a href="#servicios">Servicios y propuestas</a></li>
+					<li><a href="#responsabilidades">Responsabilidades</a></li>
+					<li><a href="#garantia">Entrega y soporte</a></li>
+					<li><a href="#datos">Datos y terceros</a></li>
+					<li><a href="#legislacion">Legislación y contacto</a></li>
+				</ol>
+			</aside>
+
+		<article class="terms__content">
+			<section id="general">
+				<span>01</span><h2>Condiciones generales</h2>
+				<p>Estos términos regulan el uso del sitio web de PulsoWeb y establecen las condiciones generales aplicables a sus servicios. Al navegar por este sitio o solicitar una cotización, la persona declara haber leído y comprendido esta información.</p>
+				<p>La información publicada tiene carácter general y puede actualizarse para reflejar cambios en los servicios, procesos o requisitos legales. Las condiciones particulares de cada proyecto quedarán establecidas en su propuesta, cotización o contrato.</p>
+			</section>
+
+			<section id="servicios">
+				<span>02</span><h2>Servicios, propuestas y pagos</h2>
+				<p>PulsoWeb presta servicios de desarrollo de páginas web, ecommerce, rediseño, mantención, seguridad, optimización, soporte, integraciones, migraciones y mejoras evolutivas.</p>
+				<h3>Alcance del proyecto</h3>
+				<p>Cada propuesta podrá definir páginas o secciones, diseño, funcionalidades, integraciones, contenido inicial, revisiones, plazos, publicación, capacitación y otros entregables. Solo se considerará incluido aquello descrito expresamente.</p>
+				<h3>Cambios de alcance</h3>
+				<p>Nuevas páginas, funcionalidades, idiomas, integraciones, rediseños significativos o modificaciones posteriores a una aprobación podrán requerir una evaluación adicional, ajuste de plazo o nueva cotización antes de ser desarrollados.</p>
+				<h3>Pagos</h3>
+				<p>Los montos, impuestos, vencimientos y eventuales hitos de pago se informarán en cada propuesta. El inicio, continuidad o publicación del proyecto podrá quedar condicionado al cumplimiento de los pagos acordados.</p>
+			</section>
+
+			<section id="responsabilidades">
+				<span>03</span><h2>Responsabilidades de las partes</h2>
+				<p>El cliente deberá entregar oportunamente la información, contenidos, accesos, aprobaciones y materiales necesarios. También será responsable de contar con autorización para utilizar textos, marcas, imágenes, bases de datos y otros recursos proporcionados a PulsoWeb.</p>
+				<p>Los plazos podrán modificarse cuando existan retrasos en la entrega de información, aprobaciones pendientes, cambios de alcance, dependencias de terceros o situaciones fuera del control razonable de PulsoWeb.</p>
+				<p>Salvo acuerdo expreso, no se incluyen identidad corporativa completa, fotografía o producción audiovisual profesional, campañas publicitarias, administración de redes sociales, carga masiva de productos ni licencias de terceros.</p>
+			</section>
+
+			<section id="garantia">
+				<span>04</span><h2>Entrega, garantía y continuidad</h2>
+				<p>Antes de publicar, el cliente deberá revisar y aprobar la solución dentro de las instancias contempladas en la propuesta. La entrega podrá incluir archivos, accesos o credenciales según la naturaleza del proyecto y las obligaciones pendientes.</p>
+				<p>Cuando se indique una garantía inicial, esta cubrirá errores atribuibles al desarrollo realizado por PulsoWeb. No comprende nuevas funcionalidades, cambios de contenido, intervenciones de terceros, problemas de proveedores externos ni solicitudes fuera del alcance aprobado.</p>
+				<p>La mantención, seguridad, soporte y evolución posteriores son servicios independientes u opcionales, salvo que la propuesta indique expresamente lo contrario. Tu proyecto no termina al publicar: PulsoWeb puede continuar acompañándolo mediante un servicio acordado.</p>
+			</section>
+
+			<section id="datos">
+				<span>05</span><h2>Datos, propiedad intelectual y terceros</h2>
+				<p>Los datos enviados voluntariamente mediante correo, WhatsApp u otros canales se utilizarán para responder consultas, preparar propuestas y gestionar la relación comercial o contractual. Cada plataforma externa puede aplicar además sus propios términos y políticas.</p>
+				<p>La titularidad y licencia de uso de diseños, código, contenidos y otros entregables se establecerá en cada propuesta. Herramientas, componentes, licencias, tipografías, plugins, plataformas y servicios de terceros conservarán sus condiciones propias.</p>
+				<p>PulsoWeb no controla la disponibilidad permanente de servicios externos como hosting, dominios, pasarelas de pago, redes sociales, APIs o plataformas de mensajería, aunque podrá prestar apoyo técnico cuando forme parte del servicio contratado.</p>
+			</section>
+
+			<section id="legislacion">
+				<span>06</span><h2>Legislación aplicable y contacto</h2>
+				<p>Estas condiciones se interpretarán conforme a la legislación vigente de la República de Chile. Los derechos irrenunciables que correspondan a consumidores no se verán limitados por este documento.</p>
+				<p>Las dudas sobre estas condiciones o sobre un proyecto pueden enviarse a <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+				<div class="terms__note"><strong>Importante</strong><p>Esta página establece condiciones generales. La propuesta o contrato aceptado para cada proyecto tendrá prioridad respecto de su alcance, precio, plazos y entregables específicos.</p></div>
+			</section>
+		</article>
+	</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.terms { background: #fff; color: #0a0a0a; }
+	.terms__hero { background: #050505; color: #fff; }
+	.terms__hero-inner { width: min(1180px,calc(100% - 48px)); margin: auto; padding: clamp(9rem,17vw,14rem) 0 clamp(5rem,9vw,8rem); }
+	.terms__hero a { display: inline-block; margin-bottom: 50px; color: rgba(255,255,255,.52); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+	.terms__hero > div > p { margin: 0 0 24px; color: var(--color-brand); font-size: .68rem; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
+	.terms h1 { max-width: 950px; color: #fff; font-size: clamp(3.5rem,8vw,8rem); font-weight: 700; letter-spacing: -.07em; line-height: .9; }
+	.terms h1 span { color: var(--color-brand); }
+	.terms__hero-inner > div { display: flex; gap: 20px; margin-top: 38px; align-items: center; justify-content: space-between; color: rgba(255,255,255,.5); }
+	.terms__hero-inner > div p { max-width: 520px; margin: 0; line-height: 1.7; }
+	.terms__hero-inner > div small { font-size: .7rem; }
+	.terms__layout { display: grid; width: min(1180px,calc(100% - 48px)); gap: clamp(3rem,8vw,8rem); margin: auto; padding: clamp(5rem,9vw,8rem) 0; }
+	.terms aside { align-self: start; }
+	.terms aside > p { margin: 0 0 18px; color: var(--color-brand-deep); font-size: .64rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+	.terms aside ol { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; counter-reset: item; }
+	.terms aside a { color: #617483; font-size: .8rem; line-height: 1.45; }
+	.terms__content { max-width: 780px; }
+	.terms__content section { padding: 0 0 clamp(3.5rem,7vw,5.5rem); scroll-margin-top: 110px; }
+	.terms__content section + section { padding-top: clamp(3.5rem,7vw,5.5rem); border-top: 1px solid rgba(10,10,10,.1); }
+	.terms__content section > span { color: var(--color-brand-deep); font-size: .65rem; font-weight: 800; letter-spacing: .12em; }
+	.terms h2 { margin: 12px 0 28px; font-size: clamp(2rem,4vw,3.5rem); font-weight: 700; letter-spacing: -.05em; line-height: 1.05; }
+	.terms h3 { margin: 30px 0 10px; font-size: 1.05rem; }
+	.terms__content p { margin: 0 0 16px; color: #536a7a; font-size: .95rem; line-height: 1.8; }
+	.terms__content a { color: var(--color-brand-deep); font-weight: 700; }
+	.terms__note { margin-top: 32px; padding: 22px; border: 1px solid rgba(var(--color-brand-rgb),.24); border-radius: 14px; background: rgba(var(--color-brand-rgb),.06); }
+	.terms__note strong { display: block; margin-bottom: 8px; color: #0a0a0a; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+	.terms__note p { margin: 0; }
+	@media(min-width:900px) { .terms__layout { grid-template-columns: 220px minmax(0,1fr); }.terms aside { position: sticky; top: 120px; } }
+	@media(max-width:700px) { .terms__hero-inner,.terms__layout { width: min(100% - 28px,1180px); }.terms__hero-inner > div { align-items: flex-start; flex-direction: column; } }
+</style>

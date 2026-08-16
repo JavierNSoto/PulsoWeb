@@ -2,20 +2,77 @@
 import { webPlans } from '../../data/webPlans';
 import { whatsappLinks } from '../../data/site';
 
-const plans = webPlans.map((plan, index) => ({ ...plan, featured: index === 1, href: index === 0 ? whatsappLinks.website : index === 1 ? whatsappLinks.ecommerce : whatsappLinks.general }));
+const plans = webPlans.map((plan, index) => ({
+	...plan,
+	href: index === 0 ? whatsappLinks.website : index === 1 ? whatsappLinks.ecommerce : whatsappLinks.general,
+}));
 ---
 
-<section class="plans" id="plans" aria-labelledby="plans-title">
+<section class="plans" id="plans" data-plans aria-labelledby="plans-title">
 	<div class="plans__inner">
-		<header><p>04 / PLANES</p><i></i><span>ELIGE EL PUNTO DE PARTIDA</span></header>
-		<h2 id="plans-title">Nuestros <em>precios</em></h2>
+		<header class="plans__heading">
+			<p><span>04</span> Planes</p>
+			<h2 id="plans-title">Tres formas de<br /><em>empezar a crecer.</em></h2>
+			<p class="plans__intro">Todos los planes reciben el mismo nivel de dedicación. Elegimos contigo el punto de partida según lo que tu negocio necesita hoy.</p>
+		</header>
+
 		<div class="plans__grid">
-			{plans.map((plan, index) => <article class:list={{ featured: plan.featured }}><p>{String(index + 1).padStart(2, '0')} / {plan.type}</p>{plan.featured && <b class="plans__featured">MÁS ELEGIDO</b>}<h3>{plan.name}</h3><span>{plan.description}</span><ul>{plan.features.slice(0, 5).map((feature) => <li>{feature}</li>)}</ul><a href={plan.href} target="_blank" rel="noopener noreferrer">{plan.cta} <b>↗</b></a></article>)}
+			{plans.map((plan, index) => (
+				<article data-plan>
+					<div class="plan__meta"><span>0{index + 1}</span><p>{plan.type}</p></div>
+					<h3>{plan.name}</h3>
+					<p class="plan__description">{plan.description}</p>
+					<div class="plan__rule"></div>
+					<p class="plan__includes">{plan.featuresTitle}</p>
+					<ul>{plan.features.slice(0, 6).map((feature) => <li><i>✓</i>{feature}</li>)}</ul>
+					<a href={plan.href} target="_blank" rel="noopener noreferrer">{plan.cta}<span>↗</span></a>
+				</article>
+			))}
 		</div>
 	</div>
 </section>
 
 <style>
-	.plans { background: #fff; color: #0a0a0a; }.plans__inner { width: min(1440px,100%); margin: auto; padding: clamp(5rem,10vw,11rem) clamp(1.25rem,5vw,5rem); }.plans header { display: flex; gap: 16px; align-items: center; color: rgba(10,10,10,.4); font-size: 10px; font-weight: 600; letter-spacing: .18em; }.plans header p { margin: 0; }.plans header i { height: 1px; flex: 1; background: rgba(10,10,10,.12); }.plans header span { white-space: nowrap; }.plans h2 { margin: clamp(2.4rem,5vw,5rem) 0 clamp(3rem,6vw,6rem); font-size: clamp(3rem,7vw,8rem); font-weight: 900; letter-spacing: -.08em; line-height: .88; }.plans h2 em { color: rgba(10,10,10,.3); font-family: var(--font-editorial); font-weight: 400; }.plans__grid { display: grid; gap: 12px; }.plans article { position: relative; display: flex; min-height: 440px; padding: clamp(1.5rem,3vw,2.5rem); flex-direction: column; border: 1px solid rgba(10,10,10,.12); }.plans article > p { margin: 0; color: rgba(10,10,10,.4); font-size: 10px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }.plans h3 { margin: 3rem 0 12px; font-size: clamp(2rem,3vw,3rem); font-weight: 900; letter-spacing: -.065em; }.plans article > span { color: rgba(10,10,10,.55); font-size: 14px; line-height: 1.65; }.plans ul { display: grid; margin: 26px 0; padding: 0; gap: 9px; list-style: none; }.plans li { color: rgba(10,10,10,.52); font-size: 12px; }.plans li::before { margin-right: 8px; content: '·'; }.plans article > a { display: flex; min-height: 46px; margin-top: auto; padding: 0 14px; align-items: center; justify-content: space-between; border: 1px solid rgba(10,10,10,.22); border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }.plans article.featured { border-color: #0a0a0a; background: #0a0a0a; color: #fff; }.plans article.featured > p,.plans article.featured > span,.plans article.featured li { color: rgba(255,255,255,.58); }.plans article.featured > a { border-color: rgba(255,255,255,.25); }.plans__featured { position: absolute; top: 20px; right: 20px; padding: 6px 8px; background: #fff; color: #0a0a0a; font-size: 9px; letter-spacing: .12em; }.plans article > a:hover { background: #0a0a0a; color: #fff; }.plans article.featured > a:hover { background: #fff; color: #0a0a0a; }@media(min-width:768px) { .plans__grid { grid-template-columns: repeat(3,minmax(0,1fr)); }.plans article:nth-child(2) { transform: translateY(-18px); } }@media(max-width:520px) { .plans header span { display: none; } }
-	.plans__grid { gap: 16px; }.plans article { border-radius: 22px; }
+	.plans { position: relative; background: #050505; color: #fff; }
+	.plans__inner { width: min(1360px,calc(100% - 48px)); margin: auto; padding: clamp(6.5rem,10vw,10rem) 0; }
+	.plans__heading { display: grid; margin-bottom: clamp(3rem,6vw,5rem); }
+	.plans__heading > p:first-child { display: flex; gap: 10px; margin: 0 0 24px; align-items: center; color: var(--color-brand); font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+	.plans__heading > p:first-child span { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid rgba(var(--color-brand-rgb),.35); border-radius: 50%; font-size: .58rem; }
+	.plans h2 { color: #fff; font-size: clamp(2.8rem,5.7vw,6.3rem); font-weight: 700; letter-spacing: -.06em; line-height: .98; }
+	.plans h2 em { color: var(--color-brand); font-style: normal; }
+	.plans__intro { max-width: 500px; margin: 28px 0 0; color: rgba(255,255,255,.56); font-size: .98rem; line-height: 1.75; }
+	.plans__grid { display: grid; gap: 14px; }
+	.plans article { display: flex; min-height: 610px; padding: clamp(1.5rem,2.6vw,2.25rem); flex-direction: column; border: 1px solid rgba(255,255,255,.12); border-radius: 22px; background: #0b0b0b; box-shadow: 0 16px 50px rgba(0,0,0,.18); transition: border-color .3s ease,transform .3s ease,box-shadow .3s ease; }
+	.plans article:hover { border-color: rgba(var(--color-brand-rgb),.42); box-shadow: 0 22px 60px rgba(0,0,0,.32); transform: translateY(-5px); }
+	.plan__meta { display: flex; align-items: center; justify-content: space-between; }
+	.plan__meta span { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 12px; background: rgba(var(--color-brand-rgb),.09); color: var(--color-brand-deep); font-size: .65rem; font-weight: 800; }
+	.plan__meta p { margin: 0; color: rgba(255,255,255,.43); font-size: .61rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+	.plans h3 { margin: 42px 0 14px; color: #fff; font-size: clamp(2rem,3vw,3rem); font-weight: 700; letter-spacing: -.05em; line-height: 1.05; }
+	.plan__description { min-height: 70px; margin: 0; color: rgba(255,255,255,.54); font-size: .88rem; line-height: 1.7; }
+	.plan__rule { height: 1px; margin: 28px 0; background: rgba(255,255,255,.1); }
+	.plan__includes { margin: 0 0 18px; color: #fff; font-size: .67rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+	.plans ul { display: grid; gap: 11px; margin: 0 0 32px; padding: 0; list-style: none; }
+	.plans li { display: flex; gap: 10px; align-items: flex-start; color: rgba(255,255,255,.56); font-size: .8rem; line-height: 1.45; }
+	.plans li i { display: grid; width: 18px; height: 18px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: rgba(var(--color-brand-rgb),.1); color: var(--color-brand-deep); font-size: .6rem; font-style: normal; }
+	.plans article > a { display: flex; min-height: 52px; margin-top: auto; padding: 0 10px 0 17px; align-items: center; justify-content: space-between; border: 1px solid rgba(255,255,255,.17); border-radius: 13px; color: #fff; font-size: .67rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; transition: background .2s ease,border-color .2s ease,color .2s ease; }
+	.plans article > a span { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 9px; background: rgba(var(--color-brand-rgb),.1); color: var(--color-brand); font-size: .95rem; }
+	.plans article > a:hover { border-color: var(--color-brand); background: var(--color-brand); color: var(--color-night); }
+	.plans article > a:hover span { background: rgba(2,9,16,.12); color: var(--color-night); }
+	@media(min-width:760px) { .plans__heading { grid-template-columns: minmax(0,1.2fr) minmax(320px,.45fr); }.plans__heading > p:first-child { grid-column: 1 / -1; }.plans__intro { margin: 0; align-self: end; }.plans__grid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+	@media(max-width:700px) { .plans__inner { width: min(100% - 28px,1360px); }.plans article { min-height: 570px; } }
 </style>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	gsap.registerPlugin(ScrollTrigger);
+	const plans = document.querySelector<HTMLElement>('[data-plans]');
+	if (plans && !plans.dataset.ready && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		plans.dataset.ready = 'true';
+		const context = gsap.context(() => {
+			gsap.from('.plans__heading > *', { y: 24, autoAlpha: 0, duration: .6, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: plans, start: 'top 78%', once: true } });
+			gsap.from('[data-plan]', { y: 32, autoAlpha: 0, duration: .58, stagger: .09, ease: 'power3.out', scrollTrigger: { trigger: '.plans__grid', start: 'top 84%', once: true } });
+		}, plans);
+		window.addEventListener('pagehide', () => context.revert(), { once: true });
+	}
+</script>

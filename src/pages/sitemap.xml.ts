@@ -6,6 +6,7 @@ const routes = [
 	'/servicios/mantencion-web',
 	'/servicios/seguridad-web',
 	'/servicios/integracion-whatsapp',
+	'/terminos-y-condiciones',
 ];
 
 export const GET: APIRoute = ({ site }) => {

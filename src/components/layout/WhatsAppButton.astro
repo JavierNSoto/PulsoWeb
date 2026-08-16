@@ -10,7 +10,9 @@ import { whatsappNumber } from '../../data/site';
 		aria-haspopup="dialog"
 		aria-controls="whatsapp-chat"
 	>
-		<span class="whatsapp-float__label">¿Qué necesitas?</span>
+		<span class="whatsapp-float__label">Hablemos</span>
+		<span class="whatsapp-float__ring whatsapp-float__ring--one" aria-hidden="true"></span>
+		<span class="whatsapp-float__ring whatsapp-float__ring--two" aria-hidden="true"></span>
 		<span class="whatsapp-float__icon" aria-hidden="true">
 			<svg viewBox="0 0 24 24">
 				<path fill="currentColor" d="M12.04 2a9.84 9.84 0 0 0-8.43 14.92L2.05 22l5.2-1.52A9.95 9.95 0 1 0 12.04 2Zm0 17.9a8.02 8.02 0 0 1-4.09-1.12l-.29-.17-3.08.9.92-3-.2-.31a7.94 7.94 0 1 1 6.74 3.7Zm4.36-5.95c-.24-.12-1.41-.69-1.63-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18a7.18 7.18 0 0 1-1.33-1.65c-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.29-.73-1.77-.2-.46-.39-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 1.99s.86 2.31.97 2.47c.12.16 1.68 2.56 4.07 3.59.57.24 1.01.39 1.36.5.57.18 1.09.16 1.5.1.46-.07 1.41-.58 1.61-1.13.2-.56.2-1.03.14-1.13-.06-.1-.22-.16-.46-.28Z" />
@@ -82,6 +84,8 @@ import { whatsappNumber } from '../../data/site';
 </div>
 
 <script>
+	import { gsap } from 'gsap';
+
 	document.querySelectorAll<HTMLElement>('[data-whatsapp-widget]').forEach((widget) => {
 		const dialog = widget.querySelector<HTMLDialogElement>('[data-chat-dialog]');
 		const form = widget.querySelector<HTMLFormElement>('[data-chat-form]');
@@ -94,7 +98,12 @@ import { whatsappNumber } from '../../data/site';
 		const progressBar = widget.querySelector<HTMLElement>('[data-progress-bar]');
 		const error = widget.querySelector<HTMLElement>('[data-chat-error]');
 		const steps = Array.from(widget.querySelectorAll<HTMLElement>('[data-chat-step]'));
+		const floatIcon = widget.querySelector<HTMLElement>('.whatsapp-float__icon');
+		const pulseRings = Array.from(widget.querySelectorAll<HTMLElement>('.whatsapp-float__ring'));
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 		let currentStep = 0;
+		let idlePulse: gsap.core.Timeline | undefined;
 
 		if (!dialog || !form || !openButton || !backButton || !nextButton || !sendButton || !currentLabel || !progressBar || !error) return;
 
@@ -130,9 +139,45 @@ import { whatsappNumber } from '../../data/site';
 			return true;
 		};
 
-		openButton.addEventListener('click', () => {
+		const openDialog = () => {
 			dialog.showModal();
 			showStep(currentStep);
+		};
+
+		if (!reducedMotion && floatIcon) {
+			gsap.set(pulseRings, { scale: .82, autoAlpha: 0, transformOrigin: 'center center' });
+			idlePulse = gsap.timeline({ repeat: -1, repeatDelay: 1.75, delay: .8 });
+			idlePulse
+				.fromTo(pulseRings[0], { scale: .82, autoAlpha: .62 }, { scale: 2.05, autoAlpha: 0, duration: .9, ease: 'power2.out' }, 0)
+				.fromTo(pulseRings[1], { scale: .82, autoAlpha: .45 }, { scale: 1.72, autoAlpha: 0, duration: .78, ease: 'power2.out' }, .16)
+				.to(floatIcon, { scale: 1.12, duration: .16, ease: 'power2.out' }, 0)
+				.to(floatIcon, { scale: .96, duration: .13, ease: 'power2.inOut' }, .16)
+				.to(floatIcon, { scale: 1, duration: .28, ease: 'elastic.out(1,.38)' }, .29);
+
+			if (canHover) {
+				openButton.addEventListener('pointermove', (event) => {
+					const bounds = openButton.getBoundingClientRect();
+					const x = (event.clientX - (bounds.left + bounds.width / 2)) * .16;
+					const y = (event.clientY - (bounds.top + bounds.height / 2)) * .2;
+					gsap.to(openButton, { x, y, duration: .24, ease: 'power2.out', overwrite: 'auto' });
+					gsap.to(floatIcon, { rotation: x * .32, scale: 1.07, duration: .24, ease: 'power2.out', overwrite: 'auto' });
+				});
+				openButton.addEventListener('pointerenter', () => idlePulse?.pause());
+				openButton.addEventListener('pointerleave', () => {
+					gsap.to(openButton, { x: 0, y: 0, duration: .5, ease: 'elastic.out(1,.42)' });
+					gsap.to(floatIcon, { rotation: 0, scale: 1, duration: .4, ease: 'back.out(2)' });
+					if (!dialog.open) idlePulse?.restart(true);
+				});
+			}
+		}
+
+		openButton.addEventListener('click', () => {
+			if (reducedMotion || !floatIcon) { openDialog(); return; }
+			idlePulse?.pause();
+			gsap.timeline({ onComplete: openDialog })
+				.to(floatIcon, { scale: .84, rotation: -8, duration: .07, ease: 'power2.in' })
+				.to(floatIcon, { scale: 1.14, rotation: 7, duration: .1, ease: 'power2.out' })
+				.to(floatIcon, { scale: 1, rotation: 0, duration: .14, ease: 'back.out(2.4)' });
 		});
 		closeButton?.addEventListener('click', () => dialog.close());
 		backButton.addEventListener('click', () => showStep(currentStep - 1));
@@ -143,6 +188,7 @@ import { whatsappNumber } from '../../data/site';
 		dialog.addEventListener('click', (event) => {
 			if (event.target === dialog) dialog.close();
 		});
+		dialog.addEventListener('close', () => { if (!reducedMotion) idlePulse?.restart(true); });
 
 		form.addEventListener('submit', (event) => {
 			event.preventDefault();
@@ -162,16 +208,23 @@ import { whatsappNumber } from '../../data/site';
 			form.reset();
 			currentStep = 0;
 		});
+
+		window.addEventListener('pagehide', () => {
+			idlePulse?.kill();
+			gsap.killTweensOf([openButton, floatIcon, ...pulseRings]);
+		}, { once: true });
 	});
 </script>
 
 <style>
-	.whatsapp-float { position: fixed; right: clamp(18px,2.5vw,36px); bottom: clamp(18px,2.5vw,34px); z-index: 90; display: flex; padding: 0; align-items: center; gap: 10px; border: 0; background: transparent; color: inherit; cursor: pointer; }
+	.whatsapp-float { position: fixed; right: clamp(18px,2.5vw,36px); bottom: clamp(18px,2.5vw,34px); z-index: 90; isolation: isolate; display: flex; padding: 0; align-items: center; gap: 10px; border: 0; background: transparent; color: inherit; cursor: pointer; }
 	.whatsapp-float__label { padding: 9px 12px; border: 1px solid rgba(148,163,184,.18); border-radius: 10px; background: #0d1b2e; color: #dbe5f2; font: 700 .68rem var(--font-primary); opacity: 0; pointer-events: none; transform: translateX(8px); transition: opacity .18s ease,transform .18s ease; }
-	.whatsapp-float__icon { display: grid; width: 56px; height: 56px; place-items: center; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; background: #20a868; color: #fff; box-shadow: 0 12px 34px rgba(17,121,72,.26); transition: background .18s ease,transform .18s ease; }
+	.whatsapp-float__ring { position: absolute; z-index: -1; top: 50%; right: 0; width: 56px; height: 56px; border: 1px solid rgba(32,168,104,.7); border-radius: 50%; pointer-events: none; transform: translateY(-50%); }
+	.whatsapp-float__ring--two { border-color: rgba(8,189,242,.52); }
+	.whatsapp-float__icon { position: relative; display: grid; width: 56px; height: 56px; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; background: #20a868; color: #fff; box-shadow: 0 12px 34px rgba(17,121,72,.3); transition: background .18s ease,box-shadow .18s ease; }
 	.whatsapp-float__icon svg { width: 27px; height: 27px; }
 	.whatsapp-float:hover .whatsapp-float__label,.whatsapp-float:focus-visible .whatsapp-float__label { opacity: 1; transform: translateX(0); }
-	.whatsapp-float:hover .whatsapp-float__icon { background: #168a55; transform: translateY(-3px); }
+	.whatsapp-float:hover .whatsapp-float__icon { background: #168a55; box-shadow: 0 16px 42px rgba(17,121,72,.4); }
 	.whatsapp-float:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 4px; border-radius: 50%; }
 
 	.chat-dialog { position: fixed; inset: auto clamp(18px,2.5vw,36px) clamp(88px,8vw,104px) auto; width: min(390px,calc(100% - 28px)); max-width: none; max-height: min(680px,calc(100dvh - 120px)); margin: 0; padding: 0; overflow: hidden; border: 1px solid rgba(var(--color-brand-rgb),.2); border-radius: 20px; background: #091727; box-shadow: 0 28px 90px rgba(0,0,0,.52); color: var(--color-white); }
@@ -222,11 +275,13 @@ import { whatsappNumber } from '../../data/site';
 	@media(max-width:520px){
 		.whatsapp-float__label { display: none; }
 		.whatsapp-float__icon { width: 52px; height: 52px; }
+		.whatsapp-float__ring { width: 52px; height: 52px; }
 		.chat-dialog { inset: auto 0 0; width: 100%; max-height: calc(100dvh - 48px); border-width: 1px 0 0; border-radius: 22px 22px 0 0; }
 		.chat-body { padding: 18px; }
 		.chat-actions { padding-inline: 18px; }
 	}
 	@media(prefers-reduced-motion:reduce){
 		.whatsapp-float__label,.whatsapp-float__icon,.chat-progress i { transition: none; }
+		.whatsapp-float__ring { display: none; }
 	}
 </style>

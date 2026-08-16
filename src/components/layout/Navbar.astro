@@ -1,60 +1,68 @@
 ---
+import Logo from '../ui/Logo.astro';
 import { home } from '../../data/home';
 import { navigation } from '../../data/site';
-
-const links = navigation;
 ---
 
-<header class="editorial-nav" data-navbar>
-	<nav class="editorial-nav__desktop" aria-label="Navegación principal">
-		<a class="editorial-nav__logo" href="/#home" aria-label="PulsoWeb, inicio"><img src={home.assets.logo} alt="PulsoWeb" width="150" height="46" /></a>
-		<ul>{links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}</ul>
-		<a class="editorial-nav__cta" href={home.links.contact} target="_blank" rel="noopener noreferrer">CONTACTAR <b>↗</b></a>
+<header class="site-nav" data-navbar>
+	<nav class="site-nav__desktop" aria-label="Navegación principal">
+		<div class="site-nav__brand"><Logo /></div>
+		<ul>{navigation.map((link) => <li><a href={link.href}>{link.label}</a></li>)}</ul>
+		<a class="site-nav__cta" href={home.links.contact} target="_blank" rel="noopener noreferrer">
+			Hablemos <span aria-hidden="true">↗</span>
+		</a>
 	</nav>
-	<div class="editorial-nav__mobile">
-		<a class="editorial-nav__logo editorial-nav__mobile-pill" href="/#home" aria-label="PulsoWeb, inicio"><img src={home.assets.logo} alt="PulsoWeb" width="150" height="46" /></a>
-		<button type="button" class="editorial-nav__toggle editorial-nav__mobile-pill" aria-expanded="false" aria-controls="mobile-menu"><span class="sr-only">Abrir menú</span><i></i><i></i></button>
+
+	<div class="site-nav__mobile">
+		<div class="site-nav__mobile-brand"><Logo /></div>
+		<button type="button" class="site-nav__toggle" aria-expanded="false" aria-controls="mobile-menu">
+			<span class="sr-only">Abrir menú</span><i></i><i></i>
+		</button>
 	</div>
-	<div class="editorial-nav__menu" id="mobile-menu" aria-hidden="true">
-		<button type="button" class="editorial-nav__close" aria-label="Cerrar menú">×</button>
-		<ul>{links.map((link) => <li><a href={link.href}>{link.label}<b>↗</b></a></li>)}</ul>
-		<a class="editorial-nav__menu-cta" href={home.links.contact} target="_blank" rel="noopener noreferrer">CONTACTAR</a>
+
+	<div class="site-nav__menu" id="mobile-menu" aria-hidden="true">
+		<p>Menú</p>
+		<ul>{navigation.map((link, index) => <li><a href={link.href}><small>0{index + 1}</small>{link.label}<b>↗</b></a></li>)}</ul>
+		<a class="site-nav__menu-cta" href={home.links.contact} target="_blank" rel="noopener noreferrer">Conversemos <span>↗</span></a>
 	</div>
 </header>
 
 <style>
-	.editorial-nav { position: fixed; z-index: 100; top: 16px; right: 0; left: 0; pointer-events: none; }
-	.editorial-nav a,.editorial-nav button { pointer-events: auto; }
-	.editorial-nav__desktop { display: flex; width: min(920px,calc(100vw - 40px)); min-height: 58px; margin: auto; padding: 6px 10px 6px 14px; align-items: center; border: 1px solid rgba(255,255,255,.08); border-radius: 999px; background: rgba(10,10,10,.95); box-shadow: 0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(28px); color: #d9d9d9; transition: background .25s ease,backdrop-filter .25s ease,box-shadow .25s ease; }
-	.editorial-nav.is-scrolled .editorial-nav__desktop { border-color: rgba(255,255,255,.1); background: rgba(10,10,10,.75); box-shadow: 0 5px 24px rgba(0,0,0,.3); backdrop-filter: blur(16px); }
-	.editorial-nav__logo { display: flex; flex: 0 0 auto; align-items: center; }
-	.editorial-nav__logo img { display: block; width: auto; height: 46px; max-width: 150px; object-fit: contain; }
-	.editorial-nav__desktop ul { position: absolute; left: 50%; display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; transform: translateX(-50%); }
-	.editorial-nav__desktop li a { display: block; padding: 9px 11px; border-radius: 999px; color: #d9d9d9; font-size: 10px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; transition: background .2s ease; white-space: nowrap; }
-	.editorial-nav__desktop li a:hover { background: rgba(255,255,255,.08); }
-	.editorial-nav__cta { display: inline-flex; gap: 10px; min-height: 42px; margin-left: auto; padding: 0 7px 0 15px; align-items: center; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 10px; font-weight: 700; letter-spacing: .13em; }
-	.editorial-nav__cta b { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%; background: rgba(10,10,10,.1); font-size: 14px; }
-	.editorial-nav__mobile,.editorial-nav__menu { display: none; }
+	.site-nav { position: fixed; z-index: 100; top: 18px; right: 0; left: 0; padding-inline: clamp(14px,2vw,28px); pointer-events: none; }
+	.site-nav a,.site-nav button { pointer-events: auto; }
+	.site-nav__desktop { display: grid; width: min(1360px,100%); min-height: 68px; margin: auto; padding: 8px 9px 8px 22px; align-items: center; grid-template-columns: 205px minmax(0,1fr) 205px; border: 1px solid rgba(255,255,255,.11); border-radius: 20px; background: rgba(2,9,16,.78); box-shadow: 0 18px 60px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.05); backdrop-filter: blur(22px); transition: background .25s ease,border-color .25s ease,transform .25s ease; }
+	.site-nav.is-scrolled .site-nav__desktop { border-color: rgba(8,189,242,.2); background: rgba(2,9,16,.92); transform: translateY(-4px); }
+	.site-nav__brand { display: flex; align-items: center; }
+	.site-nav__desktop ul { display: flex; gap: 4px; margin: 0; padding: 0; align-items: center; justify-content: center; list-style: none; }
+	.site-nav__desktop li a { display: block; padding: 10px 13px; border-radius: 999px; color: rgba(247,252,255,.72); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; transition: color .2s ease,background .2s ease; white-space: nowrap; }
+	.site-nav__desktop li a:hover { background: rgba(8,189,242,.1); color: var(--color-brand); }
+	.site-nav__cta { display: inline-flex; min-height: 50px; gap: 16px; padding: 0 9px 0 20px; align-items: center; justify-self: end; border-radius: 14px; background: var(--color-brand); color: var(--color-night); font-size: .75rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; transition: background .2s ease,transform .2s ease,box-shadow .2s ease; }
+	.site-nav__cta span { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 9px; background: rgba(2,9,16,.12); font-size: 1rem; }
+	.site-nav__cta:hover { background: #6cddff; box-shadow: 0 10px 30px rgba(var(--color-brand-rgb),.24); transform: translateY(-1px); }
+	.site-nav__mobile,.site-nav__menu { display: none; }
+
+	@media(max-width:940px) {
+		.site-nav__desktop { grid-template-columns: 180px minmax(0,1fr) 170px; }
+		.site-nav__desktop li a { padding-inline: 8px; font-size: .62rem; }
+	}
 	@media(max-width:767px) {
-		.editorial-nav { top: 16px; }
-		.editorial-nav__desktop { display: none; }
-		.editorial-nav__mobile { display: flex; padding: 0 16px; justify-content: space-between; }
-		.editorial-nav__mobile-pill { display: grid; height: 58px; padding: 6px 12px; place-items: center; border: 1px solid rgba(255,255,255,.08); border-radius: 999px; background: rgba(10,10,10,.95); box-shadow: 0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(28px); }
-		.editorial-nav__mobile .editorial-nav__logo { padding: 6px 14px; }
-		.editorial-nav__toggle { width: 58px; cursor: pointer; }
-		.editorial-nav__toggle i { display: block; width: 21px; height: 1px; margin: 4px; background: #fff; transition: transform .25s ease; }
-		.editorial-nav.menu-open .editorial-nav__toggle i:first-of-type { transform: translateY(4.5px) rotate(45deg); }
-		.editorial-nav.menu-open .editorial-nav__toggle i:last-of-type { transform: translateY(-4.5px) rotate(-45deg); }
-		.editorial-nav__menu { position: fixed; inset: -16px 0 0; z-index: -1; min-height: 100svh; padding: 8rem 24px 2rem; background: rgba(10,10,10,.95); backdrop-filter: blur(28px); clip-path: inset(0 0 100% 0); pointer-events: none; transition: clip-path .4s var(--ease-out-expo); }
-		.editorial-nav.menu-open .editorial-nav__menu { clip-path: inset(0 0 0 0); pointer-events: auto; }
-		.editorial-nav__menu ul { margin: 0; padding: 0; list-style: none; }
-		.editorial-nav__menu li { border-bottom: 1px solid rgba(255,255,255,.12); opacity: 0; transform: translateY(16px); }
-		.editorial-nav.menu-open .editorial-nav__menu li { opacity: 1; transform: none; transition: opacity .35s var(--ease-out-expo),transform .35s var(--ease-out-expo); }
-		.editorial-nav.menu-open .editorial-nav__menu li:nth-child(2) { transition-delay: .06s; }.editorial-nav.menu-open .editorial-nav__menu li:nth-child(3) { transition-delay: .12s; }
-		.editorial-nav__menu li a { display: flex; padding: 20px 0; justify-content: space-between; color: #fff; font-size: clamp(2.2rem,10vw,4rem); font-weight: 900; letter-spacing: -.06em; }
-		.editorial-nav__menu li b { font-size: .5em; font-weight: 400; }
-		.editorial-nav__close { position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; background: transparent; color: #fff; font-size: 32px; cursor: pointer; }
-		.editorial-nav__menu-cta { display: inline-flex; margin-top: 40px; padding: 14px 18px; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 10px; font-weight: 700; letter-spacing: .15em; }
+		.site-nav { top: 12px; padding-inline: 12px; }
+		.site-nav__desktop { display: none; }
+		.site-nav__mobile { display: flex; min-height: 62px; padding: 7px 8px 7px 16px; align-items: center; justify-content: space-between; border: 1px solid rgba(255,255,255,.11); border-radius: 18px; background: rgba(2,9,16,.9); box-shadow: 0 14px 40px rgba(0,0,0,.3); backdrop-filter: blur(22px); }
+		.site-nav__mobile-brand { transform: scale(.9); transform-origin: left center; }
+		.site-nav__toggle { display: grid; width: 48px; height: 48px; padding: 0; place-content: center; border: 1px solid rgba(8,189,242,.24); border-radius: 13px; background: rgba(8,189,242,.08); cursor: pointer; }
+		.site-nav__toggle i { display: block; width: 20px; height: 1px; margin: 3px 0; background: var(--color-white); transition: transform .25s ease; }
+		.site-nav.menu-open .site-nav__toggle i:first-of-type { transform: translateY(3.5px) rotate(45deg); }
+		.site-nav.menu-open .site-nav__toggle i:last-of-type { transform: translateY(-3.5px) rotate(-45deg); }
+		.site-nav__menu { position: fixed; inset: 0; z-index: -1; display: block; min-height: 100svh; padding: 7.5rem 20px 2rem; background: rgba(2,9,16,.98); color: var(--color-white); clip-path: inset(0 0 100% 0); pointer-events: none; transition: clip-path .45s var(--ease-out-expo); }
+		.site-nav.menu-open .site-nav__menu { clip-path: inset(0); pointer-events: auto; }
+		.site-nav__menu > p { margin: 0 0 1rem; color: var(--color-brand); font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+		.site-nav__menu ul { margin: 0; padding: 0; list-style: none; }
+		.site-nav__menu li { border-bottom: 1px solid rgba(255,255,255,.1); }
+		.site-nav__menu li a { display: grid; padding: 17px 0; align-items: center; grid-template-columns: 34px 1fr auto; color: #fff; font-size: clamp(2rem,10vw,3.5rem); font-weight: 700; letter-spacing: -.055em; }
+		.site-nav__menu li small { color: var(--color-brand); font-size: .65rem; letter-spacing: .08em; }
+		.site-nav__menu li b { color: var(--color-brand); font-size: .9rem; }
+		.site-nav__menu-cta { display: flex; min-height: 56px; margin-top: 28px; padding: 0 18px; align-items: center; justify-content: space-between; border-radius: 14px; background: var(--color-brand); color: var(--color-night); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 	}
 </style>
 
@@ -64,24 +72,46 @@ const links = navigation;
 	const navbar = document.querySelector<HTMLElement>('[data-navbar]');
 	if (navbar && !navbar.dataset.ready) {
 		navbar.dataset.ready = 'true';
-		const desktop = navbar.querySelector<HTMLElement>('.editorial-nav__desktop');
-		const toggle = navbar.querySelector<HTMLButtonElement>('.editorial-nav__toggle');
-		const menu = navbar.querySelector<HTMLElement>('.editorial-nav__menu');
-		const close = navbar.querySelector<HTMLButtonElement>('.editorial-nav__close');
-		const setMenu = (open: boolean) => { navbar.classList.toggle('menu-open', open); toggle?.setAttribute('aria-expanded', String(open)); menu?.setAttribute('aria-hidden', String(!open)); document.body.classList.toggle('menu-open', open); };
-		const updateNav = () => {
-			const scrolled = window.scrollY > 60; navbar.classList.toggle('is-scrolled', scrolled);
-			if (desktop && window.innerWidth >= 768) gsap.to(desktop, { width: scrolled ? Math.min(window.innerWidth - 2 * Math.min(Math.max(window.innerWidth * .04, 20), 80), 980) : Math.min(920, window.innerWidth - 40), duration: .65, ease: 'elastic.out(1, .7)', overwrite: 'auto' });
+		const desktop = navbar.querySelector<HTMLElement>('.site-nav__desktop');
+		const toggle = navbar.querySelector<HTMLButtonElement>('.site-nav__toggle');
+		const menu = navbar.querySelector<HTMLElement>('.site-nav__menu');
+		const setMenu = (open: boolean) => {
+			navbar.classList.toggle('menu-open', open);
+			toggle?.setAttribute('aria-expanded', String(open));
+			menu?.setAttribute('aria-hidden', String(!open));
+			document.body.classList.toggle('menu-open', open);
 		};
-		toggle?.addEventListener('click', () => setMenu(!navbar.classList.contains('menu-open'))); close?.addEventListener('click', () => setMenu(false)); menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+		const updateNav = () => {
+			const scrolled = window.scrollY > 48;
+			navbar.classList.toggle('is-scrolled', scrolled);
+			if (desktop && window.innerWidth >= 768) {
+				gsap.to(desktop, { width: scrolled ? Math.min(1220, window.innerWidth - 48) : Math.min(1360, window.innerWidth - 48), duration: .48, ease: 'power3.out', overwrite: true });
+			}
+		};
+		toggle?.addEventListener('click', () => setMenu(!navbar.classList.contains('menu-open')));
+		menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
 		const onKeydown = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenu(false); };
 		const onAnchorClick = (event: MouseEvent) => {
-			const anchor = (event.currentTarget as HTMLAnchorElement); const hash = new URL(anchor.href).hash; const target = hash && document.querySelector<HTMLElement>(hash);
+			const anchor = event.currentTarget as HTMLAnchorElement;
+			const hash = new URL(anchor.href).hash;
+			const target = hash && document.querySelector<HTMLElement>(hash);
 			if (!target || !window.__pulsoLenis) return;
-			event.preventDefault(); window.history.pushState(null, '', hash); window.__pulsoLenis.scrollTo(target, { duration: 1.6, easing: (value: number) => value < .5 ? 2 * value * value : 1 - Math.pow(-2 * value + 2, 2) / 2 });
+			event.preventDefault();
+			window.history.pushState(null, '', hash);
+			window.__pulsoLenis.scrollTo(target, { duration: .72, offset: -86 });
 		};
-		const anchors = [...navbar.querySelectorAll<HTMLAnchorElement>('a[href*="#"]')]; anchors.forEach((anchor) => anchor.addEventListener('click', onAnchorClick));
-		window.addEventListener('scroll', updateNav, { passive: true }); window.addEventListener('resize', updateNav); document.addEventListener('keydown', onKeydown); updateNav();
-		window.addEventListener('pagehide', () => { window.removeEventListener('scroll', updateNav); window.removeEventListener('resize', updateNav); document.removeEventListener('keydown', onKeydown); anchors.forEach((anchor) => anchor.removeEventListener('click', onAnchorClick)); gsap.killTweensOf(desktop); }, { once: true });
+		const anchors = [...navbar.querySelectorAll<HTMLAnchorElement>('a[href*="#"]')];
+		anchors.forEach((anchor) => anchor.addEventListener('click', onAnchorClick));
+		window.addEventListener('scroll', updateNav, { passive: true });
+		window.addEventListener('resize', updateNav);
+		document.addEventListener('keydown', onKeydown);
+		updateNav();
+		window.addEventListener('pagehide', () => {
+			window.removeEventListener('scroll', updateNav);
+			window.removeEventListener('resize', updateNav);
+			document.removeEventListener('keydown', onKeydown);
+			anchors.forEach((anchor) => anchor.removeEventListener('click', onAnchorClick));
+			gsap.killTweensOf(desktop);
+		}, { once: true });
 	}
 </script>

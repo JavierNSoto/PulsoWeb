@@ -1,36 +1,31 @@
 ---
 import { services } from '../../data/site';
 
-const serviceItems = services.map((service, index) => ({
-	id: `service-${index + 1}`,
-	title: service.title,
-	shortDescription: undefined,
-	description: service.description,
-	tags: undefined,
-}));
-const words = (value: string) => value.split(/\s+/);
+const details = [
+	['Actualizaciones', 'Respaldos', 'Corrección de errores', 'Soporte técnico'],
+	['Monitoreo', 'Protección de accesos', 'Revisión de vulnerabilidades', 'Recuperación'],
+	['Contacto directo', 'Llamados a la acción', 'Conversaciones inmediatas', 'Experiencia móvil'],
+];
+const symbols = ['↻', '◇', '↗'];
 ---
 
 <section class="services" id="services" data-services aria-labelledby="services-title">
-	<div class="services__progress" aria-hidden="true"><i data-services-progress></i></div>
 	<div class="services__inner">
-		<header class="services__header"><p data-services-label>03 / SERVICIOS</p><i data-services-rule></i></header>
-		<h2 id="services-title" data-services-title><span><b>Lo</b></span> <span><b>que</b></span> <span><em>Construimos</em></span></h2>
+		<header class="services__heading">
+			<p><span>03</span> Servicios</p>
+			<div>
+				<h2 id="services-title">Tu web activa, segura<br />y preparada para <em>evolucionar.</em></h2>
+				<p>El desarrollo es solo el inicio. Te acompañamos para mantener, proteger y conectar tu plataforma con las necesidades reales del negocio.</p>
+			</div>
+		</header>
+
 		<div class="services__list">
-			{serviceItems.map((service, index) => (
-				<article class="service" data-service>
-					<h3><button type="button" aria-expanded="false" aria-controls={`${service.id}-panel`} data-service-trigger>
-						<span class="service__number">{String(index + 1).padStart(2, '0')}</span>
-						<span class="service__title-mask"><strong>{service.title}</strong></span>
-						{service.shortDescription && <span class="service__short">{service.shortDescription}</span>}
-						<span class="service__plus" aria-hidden="true"><i></i><i></i></span>
-					</button></h3>
-					<div class="service__panel" id={`${service.id}-panel`} data-service-panel>
-						<div>
-							{service.description && <p>{words(service.description).map((word) => <span data-service-word>{word}&nbsp;</span>)}</p>}
-							{service.tags && service.tags.length > 0 && <ul>{service.tags.map((tag) => <li data-service-tag>{tag}</li>)}</ul>}
-						</div>
-					</div>
+			{services.map((service, index) => (
+				<article class="service-row" data-service-row>
+					<div class="service-row__number"><span>0{index + 1}</span><i aria-hidden="true">{symbols[index]}</i></div>
+					<div class="service-row__title"><p>Servicio</p><h3>{service.title}</h3></div>
+					<div class="service-row__copy"><p>{service.description}</p><ul>{details[index].map((detail) => <li>{detail}</li>)}</ul></div>
+					<a href={service.href} aria-label={`Ver ${service.title}`}><span>Ver servicio</span><b>↗</b></a>
 				</article>
 			))}
 		</div>
@@ -38,28 +33,47 @@ const words = (value: string) => value.split(/\s+/);
 </section>
 
 <style>
-	.services { position: relative; overflow: clip; background: #0a0a0a; color: #fff; }.services__inner { width: min(1440px,100%); margin: auto; padding: clamp(5rem,10vw,11rem) clamp(1.25rem,5vw,5rem); }.services__header { display: flex; gap: 18px; align-items: center; }.services__header p { margin: 0; color: rgba(255,255,255,.25); font-size: 10px; font-weight: 600; letter-spacing: .22em; }.services__header i { height: 1px; flex: 1; background: rgba(255,255,255,.1); transform-origin: left; }.services h2 { margin: clamp(2.4rem,5vw,5rem) 0 0; color: #fff; font-size: clamp(2.8rem,7vw,8rem); font-weight: 900; letter-spacing: -.085em; line-height: .9; }.services h2 > span { display: inline-block; overflow: hidden; }.services h2 b,.services h2 em { display: block; font: inherit; }.services h2 em { color: rgba(255,255,255,.3); font-family: var(--font-editorial); font-weight: 400; }.services__progress { position: absolute; top: 0; bottom: 0; left: clamp(.65rem,2vw,2rem); display: none; width: 1px; background: rgba(255,255,255,.05); }.services__progress i { display: block; width: 1px; height: 100%; background: rgba(255,255,255,.2); transform-origin: top; }.services__list { margin-top: clamp(3rem,5vw,6rem); border-top: 1px solid rgba(255,255,255,.08); }.service { position: relative; border-bottom: 1px solid rgba(255,255,255,.08); transition: opacity .5s ease; }.service::before { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: rgba(255,255,255,.3); content: ''; transform: scaleY(0); transform-origin: center; transition: transform .35s var(--ease-out-expo); }.service h3 { margin: 0; }.service button { display: grid; width: 100%; min-width: 0; padding: 24px 16px; align-items: center; grid-template-columns: 34px minmax(0,1fr) 28px; gap: 12px; border: 0; background: transparent; color: inherit; cursor: pointer; text-align: left; }.service__number { color: rgba(255,255,255,.22); font-size: 10px; font-weight: 600; letter-spacing: .2em; transition: color .3s ease; }.service__title-mask { overflow: hidden; }.service__title-mask strong { display: block; font-size: clamp(1.5rem,3.5vw,3.5rem); font-weight: 900; letter-spacing: -.035em; line-height: 1; }.service__short { display: none; }.service__plus { position: relative; display: block; width: 20px; height: 20px; }.service__plus i { position: absolute; top: 50%; left: 0; width: 20px; height: 1px; background: rgba(255,255,255,.5); transition: transform .3s var(--ease-out-expo); }.service__plus i:last-child { transform: rotate(90deg); }.service__panel { overflow: hidden; }.service__panel > div { padding: 0 calc(16px + 28px + 12px) 40px calc(16px + 34px + 12px); }.service__panel p { max-width: 672px; margin: 0; color: rgba(255,255,255,.5); font-size: clamp(.95rem,1.4vw,1.1rem); line-height: 1.75; }.service__panel p span { display: inline-block; }.service__panel ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 22px 0 0; padding: 0; list-style: none; }.service__panel li { padding: 4px 10px; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.35); font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }.services.has-js .service__panel { height: 0; opacity: 0; }.services.has-js .service.is-open .service__panel { opacity: 1; }.services.has-js .service.is-dim { opacity: .35; }.service.is-open .service__number,.service:hover .service__number { color: rgba(255,255,255,.75); }.service.is-open::before { transform: scaleY(1); }.service.is-open .service__plus i:first-child { transform: rotate(45deg); }.service.is-open .service__plus i:last-child { transform: rotate(-45deg); }
-	@media(min-width:768px) { .service button { padding: 32px 24px; grid-template-columns: 52px minmax(0,1fr) minmax(180px,.55fr) 28px; gap: 20px; }.service__short { display: block; color: rgba(255,255,255,.35); font-size: clamp(14px,1.2vw,16px); line-height: 1.5; transition: opacity .3s ease; }.service.is-open .service__short { opacity: 0; }.service__panel > div { padding-left: calc(24px + 52px + 20px); padding-right: 72px; }.service:hover { background: linear-gradient(90deg,rgba(255,255,255,.04),transparent 60%); }.service:hover::before { transform: scaleY(1); }.service:hover button > :not(.service__number):not(.service__plus) { transform: translateX(10px); transition: transform .45s var(--ease-out-expo); } }
-	@media(min-width:1024px) { .services__progress { display: block; } }
-	@media(prefers-reduced-motion:reduce) { .services [data-services-progress] { transform: none !important; }.service::before { transition: none; } }
-	.services h2 > span { padding: .15em 0; margin: -.15em 0; }
+	.services { border-top: 1px solid rgba(10,10,10,.08); background: #fff; color: #0a0a0a; }
+	.services__inner { width: min(1360px,calc(100% - 48px)); margin: auto; padding: clamp(6.5rem,10vw,10rem) 0; }
+	.services__heading > p { display: flex; gap: 10px; margin: 0 0 26px; align-items: center; color: var(--color-brand); font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+	.services__heading > p span { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid rgba(var(--color-brand-rgb),.4); border-radius: 50%; font-size: .58rem; }
+	.services__heading > div { display: grid; gap: 28px 70px; align-items: end; }
+	.services h2 { color: #0a0a0a; font-size: clamp(2.8rem,5.7vw,6.3rem); font-weight: 700; letter-spacing: -.06em; line-height: .98; }
+	.services h2 em { color: var(--color-brand); font-style: normal; }
+	.services__heading > div > p { max-width: 440px; margin: 0; color: rgba(10,10,10,.58); font-size: .96rem; line-height: 1.75; }
+	.services__list { margin-top: clamp(3.5rem,7vw,6rem); border-top: 1px solid rgba(10,10,10,.13); }
+	.service-row { position: relative; display: grid; min-height: 250px; padding: clamp(1.6rem,3.2vw,2.8rem) 0; align-items: center; border-bottom: 1px solid rgba(10,10,10,.13); transition: background .25s ease; }
+	.service-row::before { position: absolute; inset: 0 calc(50% - 50vw); z-index: 0; background: rgba(10,10,10,.022); opacity: 0; content: ''; transition: opacity .25s ease; }
+	.service-row:hover::before { opacity: 1; }
+	.service-row > * { position: relative; z-index: 1; }
+	.service-row__number { display: flex; gap: 14px; align-items: center; }
+	.service-row__number > span { color: rgba(10,10,10,.34); font-size: .64rem; font-weight: 700; letter-spacing: .12em; }
+	.service-row__number i { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid rgba(var(--color-brand-rgb),.26); border-radius: 50%; color: var(--color-brand); font-size: 1.15rem; font-style: normal; }
+	.service-row__title > p { margin: 0 0 11px; color: var(--color-brand); font-size: .58rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+	.service-row h3 { margin: 0; color: #0a0a0a; font-size: clamp(2rem,3.6vw,4rem); font-weight: 700; letter-spacing: -.055em; line-height: 1; }
+	.service-row__copy > p { max-width: 450px; margin: 0; color: rgba(10,10,10,.58); font-size: .88rem; line-height: 1.7; }
+	.service-row ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 20px 0 0; padding: 0; list-style: none; }
+	.service-row li { padding: 6px 8px; border: 1px solid rgba(10,10,10,.12); border-radius: 6px; color: rgba(10,10,10,.5); font-size: .55rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+	.service-row > a { display: flex; gap: 14px; align-items: center; justify-self: end; color: rgba(10,10,10,.72); }
+	.service-row > a > span { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+	.service-row > a b { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(10,10,10,.16); border-radius: 50%; color: var(--color-brand-deep); font-size: 1rem; transition: background .2s ease,color .2s ease; }
+	.service-row > a:hover b { background: var(--color-brand); color: #050505; }
+	@media(min-width:940px) { .services__heading > div { grid-template-columns: minmax(0,1.3fr) minmax(300px,.45fr); }.service-row { grid-template-columns: 120px minmax(260px,.8fr) minmax(330px,1fr) 150px; gap: 28px; } }
+	@media(max-width:939px) { .service-row { grid-template-columns: 80px minmax(0,1fr) auto; gap: 24px; }.service-row__copy { grid-column: 2 / -1; }.service-row > a { grid-column: 2 / -1; justify-self: start; }.service-row__number { align-self: start; flex-direction: column; }.service-row__number > span { align-self: flex-start; } }
+	@media(max-width:600px) { .services__inner { width: min(100% - 28px,1360px); }.service-row { grid-template-columns: 54px minmax(0,1fr); gap: 18px; }.service-row__number i { width: 42px; height: 42px; }.service-row__title { align-self: center; }.service-row__copy,.service-row > a { grid-column: 1 / -1; }.service-row h3 { font-size: clamp(2rem,10vw,3rem); } }
 </style>
 
 <script>
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
 	gsap.registerPlugin(ScrollTrigger);
 	const services = document.querySelector<HTMLElement>('[data-services]');
-	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	if (services && !services.dataset.ready) {
+	if (services && !services.dataset.ready && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 		services.dataset.ready = 'true';
-		const items = [...services.querySelectorAll<HTMLElement>('[data-service]')];
-		const close = (item: HTMLElement) => { const trigger = item.querySelector<HTMLButtonElement>('[data-service-trigger]'); const panel = item.querySelector<HTMLElement>('[data-service-panel]'); item.classList.remove('is-open'); trigger?.setAttribute('aria-expanded', 'false'); if (panel) gsap.to(panel, { height: 0, autoAlpha: 0, duration: .45, ease: 'power3.out', overwrite: true }); };
-		const open = (item: HTMLElement) => { const trigger = item.querySelector<HTMLButtonElement>('[data-service-trigger]'); const panel = item.querySelector<HTMLElement>('[data-service-panel]'); items.filter((other) => other !== item).forEach(close); item.classList.add('is-open'); items.forEach((other) => other.classList.toggle('is-dim', other !== item)); trigger?.setAttribute('aria-expanded', 'true'); if (panel) { gsap.to(panel, { height: 'auto', autoAlpha: 1, duration: .45, ease: 'power3.out', overwrite: true }); gsap.fromTo(panel.querySelectorAll('[data-service-word]'), { autoAlpha: 0, y: 8, filter: 'blur(3px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: .4, stagger: .022, delay: .12, ease: 'power3.out', overwrite: true }); gsap.fromTo(panel.querySelectorAll('[data-service-tag]'), { autoAlpha: 0, y: 10, clipPath: 'inset(100% 0 0 0)' }, { autoAlpha: 1, y: 0, clipPath: 'inset(0 0 0 0)', duration: .4, stagger: .07, delay: .12, ease: 'power3.out', overwrite: true }); } };
-		services.classList.add('has-js');
-		const clickHandlers = items.map((item) => { const trigger = item.querySelector<HTMLButtonElement>('[data-service-trigger]'); const handler = () => { item.classList.contains('is-open') ? (close(item), items.forEach((other) => other.classList.remove('is-dim'))) : open(item); }; trigger?.addEventListener('click', handler); return { trigger, handler }; });
-		const context = gsap.context(() => { if (!reducedMotion) { const timeline = gsap.timeline({ scrollTrigger: { trigger: services, start: 'top 76%', once: true } }); timeline.from('[data-services-label]', { x: -16, autoAlpha: 0, duration: .6 }).from('[data-services-rule]', { scaleX: 0, duration: 1.4, ease: 'power4.inOut' }, 0).from('[data-services-title] > span > *', { yPercent: 110, duration: .7, stagger: .1, ease: 'power3.out' }, .1); gsap.from('.service__title-mask strong', { yPercent: 110, duration: .75, stagger: .09, ease: 'power3.out', scrollTrigger: { trigger: '.services__list', start: 'top 80%', once: true } }); gsap.fromTo('[data-services-progress]', { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: services, start: 'top 65%', end: 'bottom 35%', scrub: 1.5 } }); } }, services);
-		const refresh = () => ScrollTrigger.refresh(); window.addEventListener('load', refresh, { once: true }); window.addEventListener('resize', refresh); window.addEventListener('pagehide', () => { window.removeEventListener('resize', refresh); clickHandlers.forEach(({ trigger, handler }) => trigger?.removeEventListener('click', handler)); context.revert(); }, { once: true });
+		const context = gsap.context(() => {
+			gsap.from('.services__heading > *', { y: 26, autoAlpha: 0, duration: .6, stagger: .09, ease: 'power3.out', scrollTrigger: { trigger: services, start: 'top 78%', once: true } });
+			gsap.from('[data-service-row]', { y: 28, autoAlpha: 0, duration: .58, stagger: .09, ease: 'power3.out', scrollTrigger: { trigger: '.services__list', start: 'top 84%', once: true } });
+		}, services);
+		window.addEventListener('pagehide', () => context.revert(), { once: true });
 	}
 </script>

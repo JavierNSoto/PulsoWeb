@@ -10,7 +10,7 @@ export const home = {
 	name: ['Diseñamos', 'Web'],
 	availability: 'Disponible para nuevos proyectos',
 	location: 'Chile / remoto',
-	headline: 'Experiencias digitales con pulso, propósito y precisión.',
+	headline: 'Creamos y hacemos evolucionar la presencia digital de tu negocio.',
 	technologies: ['Diseño web', 'Sitios corporativos', 'Tiendas online', 'Diseño responsive'],
 	links: {
 		projects: '/proyectos',
@@ -21,13 +21,13 @@ export const home = {
 	},
 	stats: [
 		{ value: 30, suffix: '+', label: 'Proyectos publicados' },
-		{ value: 5, suffix: '+', label: 'Años creando web' },
-		{ value: 98, suffix: '%', label: 'Clientes que recomiendan' },
+		{ value: 5, suffix: '+', label: 'Años creando soluciones web' },
+		{ value: 98, suffix: '%', label: 'Clientes que nos recomiendan' },
 	],
 	countries: ['Chile'],
-	quote: 'Una buena web no solo se ve bien. Hace que una marca se sienta imposible de ignorar.',
+	quote: 'Somos una empresa dedicada al diseño y desarrollo de páginas web.',
 	paragraphs: [
-		'Diseñamos y desarrollamos experiencias digitales para negocios que entienden que su presencia online debe trabajar con la misma intención que su marca.',
-		'Desde la estrategia hasta el último detalle de interacción, combinamos claridad, tecnología y una mirada editorial para construir sitios que dejan huella.',
+		'Creamos sitios corporativos, landing pages y tiendas online modernas, rápidas y fáciles de usar.',
+		'También ofrecemos mantención, seguridad, soporte e integraciones para que cada web siga funcionando y creciendo.',
 	],
 } as const;

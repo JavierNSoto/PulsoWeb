@@ -25,7 +25,6 @@ export const navigation = [
 	{ label: 'Trabajos', href: '/#work' },
 	{ label: 'Servicios', href: '/#services' },
 	{ label: 'Planes', href: '/#plans' },
-	{ label: 'FAQ', href: '/#faq' },
 ] as const;
 
 export const contactEmail = 'contacto@pulsoweb.cl';

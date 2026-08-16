@@ -1,24 +1,33 @@
 ---
+import { home } from '../../data/home';
+
 const questions = [
 	{ question: '¿Qué necesito para comenzar?', answer: 'Una idea general de tu negocio, tus servicios o productos y el objetivo del proyecto. Si aún no tienes todo definido, lo ordenamos contigo durante la primera conversación.' },
 	{ question: '¿Cuánto demora un proyecto?', answer: 'Depende del alcance, la cantidad de contenido y la rapidez de las revisiones. El plazo estimado queda definido en la propuesta antes de comenzar.' },
 	{ question: '¿El dominio y la publicación están incluidos?', answer: 'Pueden formar parte de la propuesta cuando corresponda. Dejamos por escrito qué incluye la implementación y qué servicios requieren renovación.' },
-	{ question: '¿Cómo se realizan los pagos?', answer: 'La modalidad y los hitos de pago se indican en cada propuesta según el tamaño del proyecto. No comenzamos sin que las condiciones estén claras para ambas partes.' },
-	{ question: '¿Podré administrar mi sitio o tienda?', answer: 'En ecommerce incluimos orientación básica para administrar productos y pedidos. En otros proyectos definimos el nivel de administración según tus necesidades.' },
-	{ question: '¿Qué ocurre si necesito cambios adicionales?', answer: 'Los ajustes incluidos se detallan en la propuesta. Cualquier necesidad fuera del alcance se evalúa y cotiza antes de realizarla.' },
+	{ question: '¿Cómo se realizan los pagos?', answer: 'La modalidad y los hitos de pago se indican en cada propuesta según el tamaño del proyecto. Las condiciones quedan claras antes de comenzar.' },
+	{ question: '¿Podré administrar mi sitio o tienda?', answer: 'Sí. Definimos el nivel de administración según tus necesidades y, en ecommerce, incluimos orientación básica para gestionar productos y pedidos.' },
 	{ question: '¿Ofrecen soporte después de publicar?', answer: 'Sí. Podemos acompañarte con mantención, respaldos, seguridad y soporte técnico mediante un servicio acorde a tu sitio.' },
 ];
-const intro = 'Si tu pregunta no aparece aquí, conversemos y revisamos tu caso particular.';
 ---
 
 <section class="faq" id="faq" data-faq aria-labelledby="faq-title">
 	<div class="faq__inner">
-		<header class="faq__header"><p data-faq-label>FAQ / PREGUNTAS FRECUENTES</p><i data-faq-rule></i></header>
-		<div class="faq__heading"><h2 id="faq-title" data-faq-title>Preguntas <em>frecuentes</em></h2>{intro && <p>{intro}</p>}</div>
+		<header class="faq__heading">
+			<p><span>05</span> Preguntas frecuentes</p>
+			<h2 id="faq-title">Antes de empezar,<br /><em>resolvamos tus dudas.</em></h2>
+			<div class="faq__help">
+				<p>¿No encuentras tu pregunta? Cuéntanos tu idea y revisamos tu caso sin compromiso.</p>
+				<a href={home.links.contact} target="_blank" rel="noopener noreferrer">Hacer una pregunta <span>↗</span></a>
+			</div>
+		</header>
+
 		<div class="faq__list">
 			{questions.map((item, index) => (
-				<article class:list={['faq__item', { 'is-open': index === 0 }]} data-faq-item>
-					<h3><button type="button" aria-expanded={index === 0 ? 'true' : 'false'} aria-controls={`faq-${index + 1}`} data-faq-trigger><span>{item.question}</span><i aria-hidden="true"><b></b><b></b></i></button></h3>
+				<article class="faq__item" data-faq-item>
+					<h3><button type="button" aria-expanded="false" aria-controls={`faq-${index + 1}`} data-faq-trigger>
+						<small>0{index + 1}</small><span>{item.question}</span><i aria-hidden="true"><b></b><b></b></i>
+					</button></h3>
 					<div class="faq__panel" id={`faq-${index + 1}`} data-faq-panel><p>{item.answer}</p></div>
 				</article>
 			))}
@@ -27,24 +36,62 @@ const intro = 'Si tu pregunta no aparece aquí, conversemos y revisamos tu caso 
 </section>
 
 <style>
-	.faq { border-top: 1px solid rgba(10,10,10,.08); background: #fff; color: #0a0a0a; }.faq__inner { width: min(1440px,100%); margin: auto; padding: clamp(5rem,10vw,11rem) clamp(1.25rem,5vw,5rem); }.faq__header { display: flex; gap: 18px; align-items: center; }.faq__header p { margin: 0; color: rgba(10,10,10,.3); font-size: 10px; font-weight: 600; letter-spacing: .22em; }.faq__header i { height: 1px; flex: 1; background: rgba(10,10,10,.1); transform-origin: left; }.faq__heading { display: grid; gap: 24px; margin: clamp(2.4rem,5vw,5rem) 0 clamp(3rem,6vw,6rem); align-items: end; }.faq h2 { margin: 0; font-size: clamp(3.5rem,8vw,10rem); font-weight: 900; letter-spacing: -.085em; line-height: .88; }.faq h2 em { color: rgba(10,10,10,.3); font-family: var(--font-editorial); font-weight: 400; }.faq__heading > p { max-width: 350px; margin: 0; color: rgba(10,10,10,.5); font-size: 14px; line-height: 1.7; }.faq__list { border-top: 1px solid rgba(10,10,10,.1); border-bottom: 1px solid rgba(10,10,10,.1); }.faq__item { border-bottom: 1px solid rgba(10,10,10,.1); }.faq__item:last-child { border-bottom: 0; }.faq h3 { margin: 0; }.faq button { display: grid; width: 100%; padding: 26px 0; align-items: center; grid-template-columns: minmax(0,1fr) 32px; gap: 16px; border: 0; background: transparent; color: #0a0a0a; cursor: pointer; text-align: left; }.faq button > span { font-size: clamp(1.25rem,2.2vw,1.9rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.15; transition: color .2s ease; }.faq button > i { position: relative; width: 32px; height: 32px; border: 1px solid rgba(10,10,10,.15); border-radius: 50%; transition: border-color .2s ease; }.faq button > i b { position: absolute; top: 50%; left: 9px; width: 12px; height: 1px; background: rgba(10,10,10,.7); transition: transform .25s var(--ease-out-expo); }.faq button > i b:last-child { transform: rotate(90deg); }.faq__item.is-open button > i b:last-child { transform: rotate(0); }.faq button:hover > span { color: rgba(10,10,10,.6); }.faq button:hover > i { border-color: #0a0a0a; }.faq__panel { overflow: hidden; }.faq__panel p { max-width: 720px; margin: 0; padding: 0 48px 32px 0; color: rgba(10,10,10,.7); font-size: clamp(1rem,1.4vw,1.125rem); line-height: 1.75; }.faq.has-js .faq__panel { height: 0; opacity: 0; }.faq.has-js .faq__item.is-open .faq__panel { height: auto; opacity: 1; }
-	@media(min-width:768px) { .faq__heading { grid-template-columns: minmax(0,1fr) minmax(220px,.35fr); }.faq button { padding: 32px 0; }.faq__panel p { margin-left: 0; padding-right: 70px; } }
-	@media(prefers-reduced-motion:reduce) { .faq [data-faq-rule] { transform: none !important; } }
+	.faq { border-top: 1px solid rgba(10,10,10,.09); background: #fff; color: var(--ink); }
+	.faq__inner { display: grid; width: min(1360px,calc(100% - 48px)); gap: clamp(3rem,7vw,7rem); margin: auto; padding: clamp(6.5rem,10vw,10rem) 0; }
+	.faq__heading > p:first-child { display: flex; gap: 10px; margin: 0 0 24px; align-items: center; color: var(--color-brand-deep); font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+	.faq__heading > p:first-child span { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid rgba(var(--color-brand-rgb),.35); border-radius: 50%; font-size: .58rem; }
+	.faq h2 { color: var(--ink); font-size: clamp(2.7rem,5.2vw,5.8rem); font-weight: 700; letter-spacing: -.06em; line-height: .98; }
+	.faq h2 em { color: var(--color-brand-deep); font-style: normal; }
+	.faq__help { max-width: 410px; margin-top: 34px; }
+	.faq__help p { margin: 0; color: #617483; font-size: .92rem; line-height: 1.7; }
+	.faq__help a { display: inline-flex; gap: 18px; margin-top: 20px; align-items: center; color: var(--ink); font-size: .67rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+	.faq__help a span { color: var(--color-brand-deep); font-size: 1rem; }
+	.faq__list { display: grid; gap: 10px; align-content: start; }
+	.faq__item { overflow: hidden; border: 1px solid rgba(7,19,31,.09); border-radius: 16px; background: rgba(255,255,255,.8); transition: border-color .25s ease,background .25s ease; }
+	.faq__item.is-open { border-color: rgba(var(--color-brand-rgb),.38); background: #fff; }
+	.faq h3 { margin: 0; }
+	.faq button { display: grid; width: 100%; min-height: 82px; padding: 16px 18px; align-items: center; grid-template-columns: 34px minmax(0,1fr) 38px; gap: 12px; border: 0; background: transparent; color: var(--ink); cursor: pointer; text-align: left; }
+	.faq button small { color: var(--color-brand-deep); font-size: .62rem; font-weight: 800; letter-spacing: .08em; }
+	.faq button > span { font-size: clamp(.98rem,1.5vw,1.16rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.35; }
+	.faq button > i { position: relative; display: block; width: 38px; height: 38px; border: 1px solid rgba(7,19,31,.11); border-radius: 11px; background: rgba(var(--color-brand-rgb),.06); }
+	.faq button > i b { position: absolute; top: 50%; left: 12px; width: 12px; height: 1px; background: var(--color-brand-deep); transition: transform .25s var(--ease-out-expo); }
+	.faq button > i b:last-child { transform: rotate(90deg); }
+	.faq__item.is-open button > i b:last-child { transform: rotate(0); }
+	.faq__panel { height: 0; overflow: hidden; opacity: 0; }
+	.faq__panel p { max-width: 680px; margin: 0; padding: 0 68px 26px 64px; color: #617483; font-size: .9rem; line-height: 1.75; }
+	@media(min-width:900px) { .faq__inner { grid-template-columns: minmax(330px,.7fr) minmax(480px,1fr); }.faq__heading { position: sticky; top: 110px; align-self: start; } }
+	@media(max-width:700px) { .faq__inner { width: min(100% - 28px,1360px); }.faq button { min-height: 74px; padding-inline: 14px; grid-template-columns: 26px minmax(0,1fr) 36px; }.faq__panel p { padding: 0 20px 24px 52px; } }
 </style>
 
 <script>
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
 	gsap.registerPlugin(ScrollTrigger);
 	const faq = document.querySelector<HTMLElement>('[data-faq]');
-	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	if (faq && !faq.dataset.ready) {
-		faq.dataset.ready = 'true'; faq.classList.add('has-js');
+		faq.dataset.ready = 'true';
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		const items = [...faq.querySelectorAll<HTMLElement>('[data-faq-item]')];
-		const setOpen = (current: HTMLElement) => items.forEach((item) => { const open = item === current; const trigger = item.querySelector<HTMLButtonElement>('[data-faq-trigger]'); const panel = item.querySelector<HTMLElement>('[data-faq-panel]'); item.classList.toggle('is-open', open); trigger?.setAttribute('aria-expanded', String(open)); if (panel) gsap.to(panel, { height: open ? 'auto' : 0, autoAlpha: open ? 1 : 0, duration: reducedMotion ? 0 : .4, ease: 'power3.out', overwrite: true }); });
-		const listeners = items.map((item) => { const trigger = item.querySelector<HTMLButtonElement>('[data-faq-trigger]'); const handler = () => setOpen(item); trigger?.addEventListener('click', handler); return { trigger, handler }; });
-		const context = gsap.context(() => { if (!reducedMotion) { const timeline = gsap.timeline({ scrollTrigger: { trigger: faq, start: 'top 78%', once: true } }); timeline.from('[data-faq-label]', { x: -12, autoAlpha: 0, duration: .6 }).from('[data-faq-rule]', { scaleX: 0, duration: 1.2, ease: 'power3.out' }, 0).from('[data-faq-title]', { y: 32, autoAlpha: 0, duration: .85, ease: 'power3.out' }, .1); gsap.from('[data-faq-item]', { autoAlpha: 0, y: 20, duration: .5, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: '.faq__list', start: 'top 85%', once: true } }); } }, faq);
-		const refresh = () => ScrollTrigger.refresh(); window.addEventListener('resize', refresh); window.addEventListener('pagehide', () => { window.removeEventListener('resize', refresh); listeners.forEach(({ trigger, handler }) => trigger?.removeEventListener('click', handler)); context.revert(); }, { once: true });
+		const close = (item: HTMLElement) => {
+			item.classList.remove('is-open');
+			item.querySelector<HTMLButtonElement>('[data-faq-trigger]')?.setAttribute('aria-expanded', 'false');
+			const panel = item.querySelector<HTMLElement>('[data-faq-panel]');
+			if (panel) gsap.to(panel, { height: 0, autoAlpha: 0, duration: reducedMotion ? 0 : .3, ease: 'power2.out', overwrite: true });
+		};
+		const listeners = items.map((item) => {
+			const trigger = item.querySelector<HTMLButtonElement>('[data-faq-trigger]');
+			const handler = () => {
+				const opening = !item.classList.contains('is-open');
+				items.forEach(close);
+				if (opening) {
+					item.classList.add('is-open'); trigger?.setAttribute('aria-expanded', 'true');
+					const panel = item.querySelector<HTMLElement>('[data-faq-panel]');
+					if (panel) gsap.to(panel, { height: 'auto', autoAlpha: 1, duration: reducedMotion ? 0 : .35, ease: 'power3.out', overwrite: true });
+				}
+			};
+			trigger?.addEventListener('click', handler); return { trigger, handler };
+		});
+		const context = gsap.context(() => { if (!reducedMotion) gsap.from('[data-faq-item]', { y: 20, autoAlpha: 0, duration: .5, stagger: .06, ease: 'power3.out', scrollTrigger: { trigger: '.faq__list', start: 'top 84%', once: true } }); }, faq);
+		window.addEventListener('pagehide', () => { listeners.forEach(({ trigger, handler }) => trigger?.removeEventListener('click', handler)); context.revert(); }, { once: true });
 	}
 </script>
